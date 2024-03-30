@@ -11,10 +11,10 @@ OBJECTS = main.o board.o
 $(TARGET): $(OBJECTS)
 	$(CXX) $(LXXFLAGS) $(OBJECTS) -o $(TARGET)
 
-main.o: main.cpp
+main.o: main.cpp board.h
 	$(CXX) $(CXXFLAGS) main.cpp
-#board.o: board.cpp board.h
-#	$(CXX) $(CXXFLAGS) board.cpp
+board.o: board.cpp board.h
+	$(CXX) $(CXXFLAGS) board.cpp
 
 .PHONY: clean
 clean:
