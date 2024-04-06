@@ -1,6 +1,8 @@
 
 #include "Bank.h"
 
+#include <math.h>
+
 #include <functional>
 #include <iostream>
 #include <stdexcept>
@@ -176,5 +178,37 @@ bool Bank::take_loan(Account& account, const std::string& owner_fingerprint,
 
   // Deposit loan amount into account
   account.balance = account.get_balance() + amount;
+  return true;
+}
+
+bool Bank::pay_loan(Account& account, double amount) {
+  // Check if loan amount is valid
+  if (amount <= 0 || amount > account.get_balance()) {
+    return false;
+  }
+
+  // Calculate interest
+  size_t rank = account.get_owner()->get_socioeconomic_rank();
+  double interest = (amount * 10 / rank) / 100.0;
+
+  // Deduct loan amount and interest from account balance
+  account.balance = account.get_balance() - amount - interest;
+
+  // Update loan related variables
+  customer_2_paid_loan[const_cast<Person*>(account.get_owner())] += amount;
+  customer_2_unpaid_loan[const_cast<Person*>(account.get_owner())] -= amount;
+
+  // Check if socioeconomic rank upgrade is triggered
+  double total_paid_loan =
+      customer_2_paid_loan[const_cast<Person*>(account.get_owner())];
+  size_t current_rank = account.get_owner()->get_socioeconomic_rank();
+  if (total_paid_loan >= pow(10, current_rank)) {
+    const_cast<Person*>(account.get_owner())
+        ->set_socioeconomic_rank(current_rank + 1);
+  }
+
+  // Update bank total balance with interest
+  bank_total_balance += interest;
+
   return true;
 }
