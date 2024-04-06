@@ -6,4 +6,6 @@
 
 std::string generate_account_number();
 
+std::string generate_CVV2();
+
 #endif
