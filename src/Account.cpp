@@ -67,3 +67,9 @@ bool Account::set_password(std::string& new_password,
   password = new_password;
   return true;
 }
+
+// Spaceship operator for Account comparison
+std::strong_ordering Account::operator<=>(const Account& other) const {
+  // Compare based on account_number
+  return account_number <=> other.account_number;
+}
