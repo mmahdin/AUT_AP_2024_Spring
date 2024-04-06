@@ -69,3 +69,24 @@ bool Bank::delete_account(Account& account,
   }
   return false;
 }
+
+bool Bank::delete_customer(Person& owner,
+                           const std::string& owner_fingerprint) {
+  // Authenticate owner's identity using fingerprint
+  if (std::hash<std::string>{}(owner_fingerprint) !=
+      owner.get_hashed_fingerprint()) {
+    return false;
+  }
+
+  // Remove customer and associated accounts from bank data structures
+  auto it = std::find(bank_customers.begin(), bank_customers.end(), &owner);
+  if (it != bank_customers.end()) {
+    for (auto& account : customer_2_accounts[&owner]) {
+      delete_account(*account, owner_fingerprint);
+    }
+    bank_customers.erase(it);
+    delete &owner;
+    return true;
+  }
+  return false;
+}
