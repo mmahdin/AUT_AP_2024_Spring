@@ -25,3 +25,23 @@ Bank::~Bank() {
     delete account;
   }
 }
+
+Account* Bank::create_account(Person& owner,
+                              const std::string& owner_fingerprint,
+                              std::string password) {
+  // Authenticate owner's identity using fingerprint
+  if (std::hash<std::string>{}(owner_fingerprint) !=
+      owner.get_hashed_fingerprint()) {
+    throw std::invalid_argument("Owner's fingerprint authentication failed.");
+  }
+
+  // Create new account
+  Account* new_account = new Account(&owner, this, password);
+
+  // Update bank data structures
+  bank_accounts.push_back(new_account);
+  account_2_customer[new_account] = &owner;
+  customer_2_accounts[&owner].push_back(new_account);
+
+  return new_account;
+}
