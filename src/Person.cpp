@@ -1,5 +1,7 @@
 #include "Person.h"
 
+#include <fstream>
+#include <iostream>
 #include <stdexcept>
 
 #include "Utils.h"
@@ -61,4 +63,25 @@ bool Person::set_socioeconomic_rank(size_t rank) {
 bool Person::set_is_alive(bool is_alive) {
   this->is_alive = is_alive;
   return true;
+}
+
+// Outputs person information
+void Person::get_info(std::optional<std::string> file_name) const {
+  if (file_name.has_value()) {
+    std::ofstream output(file_name.value());
+    output << "Name: " << name << std::endl;
+    output << "Age: " << age << std::endl;
+    output << "Gender: " << gender << std::endl;
+    output << "Hashed Fingerprint: " << hashed_fingerprint << std::endl;
+    output << "Socioeconomic Rank: " << socioeconomic_rank << std::endl;
+    output << "Is Alive: " << (is_alive ? "Yes" : "No") << std::endl;
+    output.close();
+  } else {
+    std::cout << "Name: " << name << std::endl;
+    std::cout << "Age: " << age << std::endl;
+    std::cout << "Gender: " << gender << std::endl;
+    std::cout << "Hashed Fingerprint: " << hashed_fingerprint << std::endl;
+    std::cout << "Socioeconomic Rank: " << socioeconomic_rank << std::endl;
+    std::cout << "Is Alive: " << (is_alive ? "Yes" : "No") << std::endl;
+  }
 }
