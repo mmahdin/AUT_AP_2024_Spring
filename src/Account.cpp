@@ -1,5 +1,7 @@
 #include "Account.h"
 
+#include <fstream>
+#include <iostream>
 #include <stdexcept>
 
 #include "Bank.h"
@@ -72,4 +74,27 @@ bool Account::set_password(std::string& new_password,
 std::strong_ordering Account::operator<=>(const Account& other) const {
   // Compare based on account_number
   return account_number <=> other.account_number;
+}
+
+// Outputs account information
+void Account::get_info(std::optional<std::string> file_name) const {
+  if (file_name.has_value()) {
+    std::ofstream output(file_name.value());
+    output << "Account Information:" << std::endl;
+    output << "Owner: " << owner->get_name() << std::endl;
+    // std::cout << "Bank: " << bank->get_name() << std::endl;
+    output << "Account Number: " << account_number << std::endl;
+    output << "Balance: " << balance << std::endl;
+    output << "Status: " << (account_status ? "Active" : "Inactive")
+           << std::endl;
+    output.close();
+  } else {
+    std::cout << "Account Information:" << std::endl;
+    std::cout << "Owner: " << owner->get_name() << std::endl;
+    // std::cout << "Bank: " << bank->get_name() << std::endl;
+    std::cout << "Account Number: " << account_number << std::endl;
+    std::cout << "Balance: " << balance << std::endl;
+    std::cout << "Status: " << (account_status ? "Active" : "Inactive")
+              << std::endl;
+  }
 }
