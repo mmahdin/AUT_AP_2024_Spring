@@ -56,3 +56,14 @@ std::string Account::get_exp_date(std::string& owner_fingerprint) const {
   }
   return exp_date;
 }
+
+// Setters requiring owner's fingerprint for authentication
+bool Account::set_password(std::string& new_password,
+                           std::string& owner_fingerprint) {
+  if (std::hash<std::string>{}(owner_fingerprint) !=
+      owner->get_hashed_fingerprint()) {
+    return false;
+  }
+  password = new_password;
+  return true;
+}
