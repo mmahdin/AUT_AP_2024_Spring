@@ -25,3 +25,17 @@ std::string generate_CVV2() {
   }
   return cvv2;
 }
+
+// Generate a random expiration date (MM/YY)
+std::string generate_exp_date() {
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<int> distrib_month(1, 12);
+  std::uniform_int_distribution<int> distrib_year(20, 30);
+
+  int month = distrib_month(gen);
+  int year = distrib_year(gen);
+
+  return (month < 10 ? "0" + std::to_string(month) : std::to_string(month)) +
+         "/" + std::to_string(year);
+}
