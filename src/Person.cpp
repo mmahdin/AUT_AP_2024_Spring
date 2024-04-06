@@ -24,3 +24,8 @@ Person::Person(std::string &name, size_t age, std::string &gender,
     throw std::invalid_argument(
         "The socioeconomic rank is an integer value ranging from 1 to 10.");
 }
+
+// Spaceship operator for Person comparison
+std::strong_ordering Person::operator<=>(const Person &other) const {
+  return hashed_fingerprint <=> other.hashed_fingerprint;
+}
