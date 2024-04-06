@@ -104,3 +104,22 @@ bool Bank::deposit(Account& account, const std::string& owner_fingerprint,
   bank_total_balance += amount;
   return true;
 }
+
+bool Bank::withdraw(Account& account, const std::string& owner_fingerprint,
+                    double amount) {
+  // Authenticate owner's identity using fingerprint
+  if (std::hash<std::string>{}(owner_fingerprint) !=
+      account.get_owner()->get_hashed_fingerprint()) {
+    return false;
+  }
+
+  // Check if sufficient balance
+  if (account.get_balance() < amount) {
+    return false;
+  }
+
+  // Perform withdrawal operation
+  account.balance = account.get_balance() - amount;
+  bank_total_balance -= amount;
+  return true;
+}
