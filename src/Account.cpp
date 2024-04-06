@@ -31,3 +31,28 @@ double Account::get_balance() const { return balance; }
 std::string Account::get_account_number() const { return account_number; }
 
 bool Account::get_status() const { return account_status; }
+
+// Getters requiring owner's fingerprint for authentication
+std::string Account::get_CVV2(std::string& owner_fingerprint) const {
+  if (std::hash<std::string>{}(owner_fingerprint) !=
+      owner->get_hashed_fingerprint()) {
+    throw std::invalid_argument("Fingerprint authentication failed.");
+  }
+  return CVV2;
+}
+
+std::string Account::get_password(std::string& owner_fingerprint) const {
+  if (std::hash<std::string>{}(owner_fingerprint) !=
+      owner->get_hashed_fingerprint()) {
+    throw std::invalid_argument("Fingerprint authentication failed.");
+  }
+  return password;
+}
+
+std::string Account::get_exp_date(std::string& owner_fingerprint) const {
+  if (std::hash<std::string>{}(owner_fingerprint) !=
+      owner->get_hashed_fingerprint()) {
+    throw std::invalid_argument("Fingerprint authentication failed.");
+  }
+  return exp_date;
+}
