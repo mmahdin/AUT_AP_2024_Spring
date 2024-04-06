@@ -22,3 +22,12 @@ Account::Account(const Person* const owner, const Bank* const bank,
     throw std::invalid_argument("Owner and bank must be valid pointers.");
   }
 }
+
+// Getters
+const Person* Account::get_owner() const { return owner; }
+
+double Account::get_balance() const { return balance; }
+
+std::string Account::get_account_number() const { return account_number; }
+
+bool Account::get_status() const { return account_status; }
