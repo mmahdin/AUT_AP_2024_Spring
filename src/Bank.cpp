@@ -90,3 +90,17 @@ bool Bank::delete_customer(Person& owner,
   }
   return false;
 }
+
+bool Bank::deposit(Account& account, const std::string& owner_fingerprint,
+                   double amount) {
+  // Authenticate owner's identity using fingerprint
+  if (std::hash<std::string>{}(owner_fingerprint) !=
+      account.get_owner()->get_hashed_fingerprint()) {
+    return false;
+  }
+
+  // Perform deposit operation
+  account.balance = account.get_balance() + amount;
+  bank_total_balance += amount;
+  return true;
+}
