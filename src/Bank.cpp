@@ -282,3 +282,44 @@ double Bank::get_bank_total_loan(std::string& bank_fingerprint) const {
   }
   return bank_total_loan;
 }
+
+// Account Setters
+
+bool Bank::set_owner(Account& account, const Person* new_owner,
+                     std::string& owner_fingerprint,
+                     std::string& bank_fingerprint) {
+  // Authenticate owner and bank's identity using fingerprints
+  if (std::hash<std::string>{}(owner_fingerprint) !=
+          account.get_owner()->get_hashed_fingerprint() ||
+      std::hash<std::string>{}(bank_fingerprint) != hashed_bank_fingerprint) {
+    return false;
+  }
+
+  // Update account's owner
+  account.owner = const_cast<Person*>(new_owner);
+  return true;
+}
+
+bool Bank::set_account_status(Account& account, bool status,
+                              std::string& bank_fingerprint) {
+  // Authenticate bank's identity using fingerprint
+  if (std::hash<std::string>{}(bank_fingerprint) != hashed_bank_fingerprint) {
+    return false;
+  }
+
+  // Update account status
+  account.account_status = status;
+  return true;
+}
+
+bool Bank::set_exp_date(Account& account, std::string& exp_date,
+                        std::string& bank_fingerprint) {
+  // Authenticate bank's identity using fingerprint
+  if (std::hash<std::string>{}(bank_fingerprint) != hashed_bank_fingerprint) {
+    return false;
+  }
+
+  // Update account's expiration date
+  account.exp_date = exp_date;
+  return true;
+}
