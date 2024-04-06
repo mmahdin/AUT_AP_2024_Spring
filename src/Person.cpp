@@ -42,3 +42,23 @@ size_t Person::get_hashed_fingerprint() const { return hashed_fingerprint; }
 size_t Person::get_socioeconomic_rank() const { return socioeconomic_rank; }
 
 bool Person::get_is_alive() const { return is_alive; }
+
+// Setters
+bool Person::set_age(size_t age) {
+  this->age = age;
+  return true;
+}
+
+bool Person::set_socioeconomic_rank(size_t rank) {
+  if (rank < 1 || rank > 10) {
+    throw std::invalid_argument(
+        "The socioeconomic rank is an integer value ranging from 1 to 10.");
+  }
+  this->socioeconomic_rank = rank;
+  return true;
+}
+
+bool Person::set_is_alive(bool is_alive) {
+  this->is_alive = is_alive;
+  return true;
+}
