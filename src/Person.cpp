@@ -18,4 +18,9 @@ Person::Person(std::string &name, size_t age, std::string &gender,
   // Validate gender
   if (gender != "Female" && gender != "Male")
     throw std::invalid_argument("Gender must be Male or Female.");
+
+  // Validate range of socioeconomic rank
+  if (socioeconomic_rank < 1 && socioeconomic_rank > 10)
+    throw std::invalid_argument(
+        "The socioeconomic rank is an integer value ranging from 1 to 10.");
 }
