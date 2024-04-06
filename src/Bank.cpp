@@ -153,3 +153,28 @@ bool Bank::transfer(Account& source, Account& destination,
   destination.balance = destination.get_balance() + amount;
   return true;
 }
+
+bool Bank::take_loan(Account& account, const std::string& owner_fingerprint,
+                     double amount) {
+  // Authenticate owner's identity using fingerprint
+  if (std::hash<std::string>{}(owner_fingerprint) !=
+      account.get_owner()->get_hashed_fingerprint()) {
+    return false;
+  }
+
+  // Calculate loan eligibility
+  size_t rank = account.get_owner()->get_socioeconomic_rank();
+  double max_loan = (10 * rank / 100.0) * bank_total_balance;
+
+  if (amount > max_loan || amount <= 0) {
+    return false;
+  }
+
+  // Update loan related variables
+  bank_total_loan += amount;
+  customer_2_unpaid_loan[const_cast<Person*>(account.get_owner())] += amount;
+
+  // Deposit loan amount into account
+  account.balance = account.get_balance() + amount;
+  return true;
+}
