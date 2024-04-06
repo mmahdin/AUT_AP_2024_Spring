@@ -45,3 +45,27 @@ Account* Bank::create_account(Person& owner,
 
   return new_account;
 }
+
+bool Bank::delete_account(Account& account,
+                          const std::string& owner_fingerprint) {
+  // Authenticate owner's identity using fingerprint
+  if (std::hash<std::string>{}(owner_fingerprint) !=
+      account.get_owner()->get_hashed_fingerprint()) {
+    return false;
+  }
+
+  // Remove account from bank data structures
+  auto it = std::find(bank_accounts.begin(), bank_accounts.end(), &account);
+  if (it != bank_accounts.end()) {
+    bank_accounts.erase(it);
+    account_2_customer.erase(&account);
+    auto& accounts_of_owner =
+        customer_2_accounts[const_cast<Person*>(account.get_owner())];
+    accounts_of_owner.erase(std::remove(accounts_of_owner.begin(),
+                                        accounts_of_owner.end(), &account),
+                            accounts_of_owner.end());
+    delete &account;
+    return true;
+  }
+  return false;
+}
