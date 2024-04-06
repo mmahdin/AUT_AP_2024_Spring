@@ -14,8 +14,8 @@ Account::Account(const Person* const owner, const Bank* const bank,
       account_number(generate_account_number()),
       balance(0),
       account_status(true),
-      password(password),
       CVV2(generate_CVV2()),
+      password(password),
       exp_date(generate_exp_date()) {
   // Ensure owner and bank pointers are valid
   if (!owner || !bank) {
