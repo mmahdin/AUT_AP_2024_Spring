@@ -29,3 +29,16 @@ Person::Person(std::string &name, size_t age, std::string &gender,
 std::strong_ordering Person::operator<=>(const Person &other) const {
   return hashed_fingerprint <=> other.hashed_fingerprint;
 }
+
+// Getters
+std::string Person::get_name() const { return name; }
+
+size_t Person::get_age() const { return age; }
+
+std::string Person::get_gender() const { return gender; }
+
+size_t Person::get_hashed_fingerprint() const { return hashed_fingerprint; }
+
+size_t Person::get_socioeconomic_rank() const { return socioeconomic_rank; }
+
+bool Person::get_is_alive() const { return is_alive; }
