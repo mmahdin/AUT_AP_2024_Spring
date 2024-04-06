@@ -212,3 +212,73 @@ bool Bank::pay_loan(Account& account, double amount) {
 
   return true;
 }
+
+// Getters
+
+const std::string& Bank::get_bank_name() const { return bank_name; }
+
+size_t Bank::get_hashed_bank_fingerprint() const {
+  return hashed_bank_fingerprint;
+}
+
+const std::vector<Person*>& Bank::get_bank_customers(
+    std::string& bank_fingerprint) const {
+  if (std::hash<std::string>{}(bank_fingerprint) != hashed_bank_fingerprint) {
+    throw std::invalid_argument("Bank fingerprint authentication failed.");
+  }
+  return bank_customers;
+}
+
+const std::vector<Account*>& Bank::get_bank_accounts(
+    std::string& bank_fingerprint) const {
+  if (std::hash<std::string>{}(bank_fingerprint) != hashed_bank_fingerprint) {
+    throw std::invalid_argument("Bank fingerprint authentication failed.");
+  }
+  return bank_accounts;
+}
+
+const std::map<Account*, Person*>& Bank::get_account_2_customer_map(
+    std::string& bank_fingerprint) const {
+  if (std::hash<std::string>{}(bank_fingerprint) != hashed_bank_fingerprint) {
+    throw std::invalid_argument("Bank fingerprint authentication failed.");
+  }
+  return account_2_customer;
+}
+
+const std::map<Person*, std::vector<Account*>>&
+Bank::get_customer_2_accounts_map(std::string& bank_fingerprint) const {
+  if (std::hash<std::string>{}(bank_fingerprint) != hashed_bank_fingerprint) {
+    throw std::invalid_argument("Bank fingerprint authentication failed.");
+  }
+  return customer_2_accounts;
+}
+
+const std::map<Person*, double>& Bank::get_customer_2_paid_loan_map(
+    std::string& bank_fingerprint) const {
+  if (std::hash<std::string>{}(bank_fingerprint) != hashed_bank_fingerprint) {
+    throw std::invalid_argument("Bank fingerprint authentication failed.");
+  }
+  return customer_2_paid_loan;
+}
+
+const std::map<Person*, double>& Bank::get_customer_2_unpaid_loan_map(
+    std::string& bank_fingerprint) const {
+  if (std::hash<std::string>{}(bank_fingerprint) != hashed_bank_fingerprint) {
+    throw std::invalid_argument("Bank fingerprint authentication failed.");
+  }
+  return customer_2_unpaid_loan;
+}
+
+double Bank::get_bank_total_balance(std::string& bank_fingerprint) const {
+  if (std::hash<std::string>{}(bank_fingerprint) != hashed_bank_fingerprint) {
+    throw std::invalid_argument("Bank fingerprint authentication failed.");
+  }
+  return bank_total_balance;
+}
+
+double Bank::get_bank_total_loan(std::string& bank_fingerprint) const {
+  if (std::hash<std::string>{}(bank_fingerprint) != hashed_bank_fingerprint) {
+    throw std::invalid_argument("Bank fingerprint authentication failed.");
+  }
+  return bank_total_loan;
+}
