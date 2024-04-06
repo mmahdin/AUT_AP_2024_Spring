@@ -479,7 +479,9 @@ CMakeFiles/main.dir/src/Bank.cpp.o: src/Bank.cpp \
   /usr/local/include/c++/13.2.0/bits/basic_ios.tcc \
   /usr/local/include/c++/13.2.0/bits/ostream.tcc \
   /usr/local/include/c++/13.2.0/istream \
-  /usr/local/include/c++/13.2.0/bits/istream.tcc
+  /usr/local/include/c++/13.2.0/bits/istream.tcc \
+  include/Account.h \
+  include/Person.h
 
 CMakeFiles/main.dir/src/Person.cpp.o: src/Person.cpp \
   /usr/include/stdc-predef.h \
