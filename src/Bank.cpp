@@ -123,3 +123,33 @@ bool Bank::withdraw(Account& account, const std::string& owner_fingerprint,
   bank_total_balance -= amount;
   return true;
 }
+
+bool Bank::transfer(Account& source, Account& destination,
+                    const std::string& owner_fingerprint,
+                    const std::string& CVV2, const std::string& password,
+                    const std::string& exp_date, double amount) {
+  // Authenticate owner's identity using fingerprint
+  if (std::hash<std::string>{}(owner_fingerprint) !=
+      source.get_owner()->get_hashed_fingerprint()) {
+    return false;
+  }
+
+  // Verify credentials
+  if (source.get_CVV2(const_cast<std::string&>(owner_fingerprint)) != CVV2 ||
+      source.get_password(const_cast<std::string&>(owner_fingerprint)) !=
+          password ||
+      source.get_exp_date(const_cast<std::string&>(owner_fingerprint)) !=
+          exp_date) {
+    return false;
+  }
+
+  // Check if sufficient balance for transfer
+  if (source.get_balance() < amount) {
+    return false;
+  }
+
+  // Perform transfer operation
+  source.balance = source.get_balance() - amount;
+  destination.balance = destination.get_balance() + amount;
+  return true;
+}
