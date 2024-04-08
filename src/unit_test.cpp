@@ -214,7 +214,7 @@ TEST_F(PersonTest, PersonGetInfoFileOutput) {
   // Clean up the file after testing
   std::remove(filename.c_str());
 }
-/*
+
 // "============================================="
 // "              Account Class Tests            "
 // "============================================="
@@ -358,7 +358,7 @@ TEST_F(AccountTest, GetExpDateWithAuthentication) {
       << "Accessing expiration date with an incorrect fingerprint should throw "
          "an error.";
 }
-
+/*
 // "============================================="
 // "               Bank Class Tests              "
 // "============================================="

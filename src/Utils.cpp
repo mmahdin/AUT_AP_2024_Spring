@@ -20,7 +20,7 @@ std::string generate_CVV2() {
   std::uniform_int_distribution<int> distrib(0, 9);
 
   std::string cvv2 = "";
-  for (int i = 0; i < 3; ++i) {
+  for (int i = 0; i < 4; ++i) {
     cvv2 += std::to_string(distrib(gen));
   }
   return cvv2;
@@ -36,6 +36,6 @@ std::string generate_exp_date() {
   int month = distrib_month(gen);
   int year = distrib_year(gen);
 
-  return (month < 10 ? "0" + std::to_string(month) : std::to_string(month)) +
-         "/" + std::to_string(year);
+  return std::to_string(year) + "-" +
+         (month < 10 ? "0" + std::to_string(month) : std::to_string(month));
 }

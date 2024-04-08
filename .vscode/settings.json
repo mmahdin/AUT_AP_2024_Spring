@@ -48,6 +48,10 @@
         "streambuf": "cpp",
         "cinttypes": "cpp",
         "typeinfo": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "bitset": "cpp",
+        "ctime": "cpp",
+        "regex": "cpp",
+        "sstream": "cpp"
     }
 }
