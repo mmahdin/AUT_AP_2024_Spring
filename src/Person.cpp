@@ -22,7 +22,7 @@ Person::Person(std::string &name, size_t age, std::string &gender,
     throw std::invalid_argument("Gender must be Male or Female.");
 
   // Validate range of socioeconomic rank
-  if (socioeconomic_rank < 1 && socioeconomic_rank > 10)
+  if (socioeconomic_rank == 0 || socioeconomic_rank > 10)
     throw std::invalid_argument(
         "The socioeconomic rank is an integer value ranging from 1 to 10.");
 }
@@ -52,9 +52,8 @@ bool Person::set_age(size_t age) {
 }
 
 bool Person::set_socioeconomic_rank(size_t rank) {
-  if (rank < 1 || rank > 10) {
-    throw std::invalid_argument(
-        "The socioeconomic rank is an integer value ranging from 1 to 10.");
+  if (rank == 0 || rank > 10) {
+    return false;
   }
   this->socioeconomic_rank = rank;
   return true;
