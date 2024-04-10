@@ -53,6 +53,7 @@ bool Person::set_age(size_t age) {
 
 bool Person::set_socioeconomic_rank(size_t rank) {
   if (rank == 0 || rank > 10) {
+    throw std::invalid_argument("socioeconomic rank shoulb be lass than 10.");
     return false;
   }
   this->socioeconomic_rank = rank;

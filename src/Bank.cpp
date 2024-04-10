@@ -14,15 +14,16 @@
 Bank::Bank(const std::string& bank_name, const std::string& bank_fingerprint)
     : bank_name{bank_name},
       hashed_bank_fingerprint{std::hash<std::string>{}(bank_fingerprint)},
+      bank_customers{},
       bank_total_balance{0},
       bank_total_loan{0} {}
 
 // Destructor
 Bank::~Bank() {
   // Clean up dynamically allocated memory
-  for (auto& customer : bank_customers) {
-    delete customer;
-  }
+  // for (auto& customer : bank_customers) {
+  //   delete customer;
+  // }
   for (auto& account : bank_accounts) {
     delete account;
   }
@@ -38,13 +39,18 @@ Account* Bank::create_account(Person& owner,
   }
 
   // Create new account
-  Account* new_account = new Account(&owner, this, password);
+  Account* new_account{new Account(&owner, this, password)};
 
   // Update bank data structures
   bank_accounts.push_back(new_account);
   account_2_customer[new_account] = &owner;
   customer_2_accounts[&owner].push_back(new_account);
 
+  // Add owner to bank_customers if not already present
+  auto it = std::find(bank_customers.begin(), bank_customers.end(), &owner);
+  if (it == bank_customers.end()) {
+    bank_customers.push_back(&owner);
+  }
   return new_account;
 }
 
@@ -53,7 +59,14 @@ bool Bank::delete_account(Account& account,
   // Authenticate owner's identity using fingerprint
   if (std::hash<std::string>{}(owner_fingerprint) !=
       account.get_owner()->get_hashed_fingerprint()) {
+    throw std::invalid_argument(
+        "Account should not be deleted with incorrect fingerprint.");
     return false;
+  }
+
+  if (account.balance > 0) {
+    throw std::invalid_argument(
+        "Account with unpaid loan should not be deleted.");
   }
 
   // Remove account from bank data structures
@@ -61,11 +74,16 @@ bool Bank::delete_account(Account& account,
   if (it != bank_accounts.end()) {
     bank_accounts.erase(it);
     account_2_customer.erase(&account);
-    auto& accounts_of_owner =
+    auto accounts_of_owner =
         customer_2_accounts[const_cast<Person*>(account.get_owner())];
-    accounts_of_owner.erase(std::remove(accounts_of_owner.begin(),
-                                        accounts_of_owner.end(), &account),
-                            accounts_of_owner.end());
+    auto it2 =
+        std::find(accounts_of_owner.begin(), accounts_of_owner.end(), &account);
+    accounts_of_owner.erase(it2);
+    for (auto i : accounts_of_owner) {
+      std::cout << i->get_owner() << std::endl;
+    }
+    customer_2_accounts[const_cast<Person*>(account.get_owner())] =
+        accounts_of_owner;
     delete &account;
     return true;
   }
@@ -80,14 +98,19 @@ bool Bank::delete_customer(Person& owner,
     return false;
   }
 
+  if (customer_2_unpaid_loan[&owner] > 0) {
+    throw std::invalid_argument("Customer with unpaid loan");
+    return false;
+  }
+
   // Remove customer and associated accounts from bank data structures
   auto it = std::find(bank_customers.begin(), bank_customers.end(), &owner);
   if (it != bank_customers.end()) {
     for (auto& account : customer_2_accounts[&owner]) {
       delete_account(*account, owner_fingerprint);
     }
+    customer_2_accounts.erase(&owner);
     bank_customers.erase(it);
-    delete &owner;
     return true;
   }
   return false;
@@ -103,7 +126,7 @@ bool Bank::deposit(Account& account, const std::string& owner_fingerprint,
 
   // Perform deposit operation
   account.balance = account.get_balance() + amount;
-  bank_total_balance += amount;
+  // bank_total_balance += amount;
   return true;
 }
 
@@ -112,7 +135,12 @@ bool Bank::withdraw(Account& account, const std::string& owner_fingerprint,
   // Authenticate owner's identity using fingerprint
   if (std::hash<std::string>{}(owner_fingerprint) !=
       account.get_owner()->get_hashed_fingerprint()) {
+    throw std::invalid_argument("Withdrawal with incorrect fingerprint");
     return false;
+  }
+
+  if (amount > account.get_balance()) {
+    throw std::invalid_argument("Withdrawal exceeding account balance");
   }
 
   // Check if sufficient balance
@@ -166,15 +194,28 @@ bool Bank::take_loan(Account& account, const std::string& owner_fingerprint,
 
   // Calculate loan eligibility
   size_t rank = account.get_owner()->get_socioeconomic_rank();
-  double max_loan = (10 * rank / 100.0) * bank_total_balance;
+  size_t balance_t{};
+  for (auto acc :
+       customer_2_accounts[const_cast<Person*>(account.get_owner())]) {
+    balance_t += acc->balance;
+  }
+  double max_loan = (10 * rank / 100.0) * balance_t;
+
+  if (max_loan < amount) {
+    throw std::invalid_argument("insufficient eligibility.");
+  }
 
   if (amount > max_loan || amount <= 0) {
     return false;
   }
 
+  double interestRate = 10.0 / account.get_owner()->get_socioeconomic_rank();
+  // customer_2_unpaid_loan[const_cast<Person*>(account.get_owner())] += amount;
+  customer_2_unpaid_loan[const_cast<Person*>(account.get_owner())] +=
+      (amount * (1 + interestRate / 100.0));
+
   // Update loan related variables
-  bank_total_loan += amount;
-  customer_2_unpaid_loan[const_cast<Person*>(account.get_owner())] += amount;
+  bank_total_loan += (amount * (1 + interestRate / 100.0));
 
   // Deposit loan amount into account
   account.balance = account.get_balance() + amount;
@@ -192,7 +233,7 @@ bool Bank::pay_loan(Account& account, double amount) {
   double interest = (amount * 10 / rank) / 100.0;
 
   // Deduct loan amount and interest from account balance
-  account.balance = account.get_balance() - amount - interest;
+  account.balance = account.get_balance() - amount;
 
   // Update loan related variables
   customer_2_paid_loan[const_cast<Person*>(account.get_owner())] += amount;
