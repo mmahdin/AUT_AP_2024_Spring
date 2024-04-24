@@ -26,3 +26,17 @@ void BloomFilter<N>::add(const std::string& item) {
     server->addWord(item);
   }
 }
+
+template <std::size_t N>
+void BloomFilter<N>::add(
+    std::string&& file_name = "../Resource/Word_DataSet_1.txt") {
+  std::ifstream file(file_name);
+  if (!file.is_open()) {
+    std::cerr << "Error: Unable to open the file." << std::endl;
+  }
+  std::string word;
+  while (file >> word) {
+    add(word);
+  }
+  file.close();
+}

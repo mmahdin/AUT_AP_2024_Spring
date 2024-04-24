@@ -1,8 +1,10 @@
 #ifndef BLOOM_FILTER_H
 #define BLOOM_FILTER_H
 
-#include <bitset>      // Included for std::bitset
+#include <bitset>  // Included for std::bitset
+#include <fstream>
 #include <functional>  // Included for std::hash
+#include <string>
 #include <vector>
 
 #include "CDNServer.h"  // Dependency for checking definitively if an item is in the dataset
