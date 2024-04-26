@@ -73,3 +73,20 @@ void BloomFilter<N>::reset() {
   std::bitset<N> new_bits;
   bits = new_bits;
 }
+
+template <std::size_t N>
+BloomFilter<N>& BloomFilter<N>::operator&(const BloomFilter<N>& other) {
+  std::bitset<N> result_and{bits & other.bits};
+  return *this;
+}
+
+template <std::size_t N>
+BloomFilter<N>& BloomFilter<N>::operator|(const BloomFilter& other) {
+  std::bitset<N> result_and{bits | other.bits};
+  return *this;
+}
+
+template <std::size_t N>
+bool BloomFilter<N>::operator()(const std::string& item) const {
+  return possiblyContains(item);
+}
