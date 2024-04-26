@@ -40,3 +40,20 @@ void BloomFilter<N>::add(
   }
   file.close();
 }
+
+template <std::size_t N>
+bool BloomFilter<N>::possiblyContains(const std::string& item) const {
+  std::size_t hashed;
+  std::size_t mod;
+  for (std::size_t i{}; i < N; i++) {
+    hashed = hash(item, seeds[i]);
+    mod = hashed % N;
+    if (!bits.test(mod)) return 0;
+  }
+  return 1;
+}
+
+template <std::size_t N>
+bool BloomFilter<N>::possiblyContains(std::string&& item) const {
+  return possiblyContains(item);
+}
