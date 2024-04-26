@@ -67,3 +67,9 @@ template <std::size_t N>
 bool BloomFilter<N>::certainlyContains(std::string&& item) const {
   return certainlyContains(item);
 }
+
+template <std::size_t N>
+void BloomFilter<N>::reset() {
+  std::bitset<N> new_bits;
+  bits = new_bits;
+}
