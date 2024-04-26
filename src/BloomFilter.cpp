@@ -57,3 +57,13 @@ template <std::size_t N>
 bool BloomFilter<N>::possiblyContains(std::string&& item) const {
   return possiblyContains(item);
 }
+
+template <std::size_t N>
+bool BloomFilter<N>::certainlyContains(const std::string& item) const {
+  return server->checkWord(item);
+}
+
+template <std::size_t N>
+bool BloomFilter<N>::certainlyContains(std::string&& item) const {
+  return certainlyContains(item);
+}
