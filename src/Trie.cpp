@@ -53,7 +53,7 @@ Trie& Trie::operator=(Trie&& other) noexcept {
 }
 
 void Trie::insert(const std::string& str) {
-  Node* node = root;
+  Node* node{root};
   for (char ch : str) {
     int index = ch - 'a';
     if (node->children[index] == nullptr) {
@@ -63,4 +63,15 @@ void Trie::insert(const std::string& str) {
     node = node->children[index];
   }
   node->is_finished = true;
+}
+
+bool Trie::search(const std::string& query) const {
+  Node* node{root};
+  for (auto ch : query) {
+    int index{ch - 'a'};
+    if (node->children[index] == nullptr) return 0;
+    node = node->children[index];
+  }
+  if (node->is_finished) return 1;
+  return 0;
 }
