@@ -5,7 +5,10 @@
 #include <functional>
 #include <initializer_list>
 #include <iostream>
+#include <queue>
+#include <stack>
 #include <string>
+#include <utility>
 
 class Trie {
  public:

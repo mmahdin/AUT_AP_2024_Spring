@@ -31,3 +31,23 @@ Trie::Trie(std::initializer_list<std::string> list) : root{new Node()} {
 }
 
 Trie::~Trie() { delete root; }
+
+Trie& Trie::operator=(const Trie& other) {
+  if (this != &other) {
+    // Clear current trie
+    delete root;
+    // Copy nodes from other trie
+    root = new Node();
+    *this = other;
+  }
+  return *this;
+}
+
+Trie& Trie::operator=(Trie&& other) noexcept {
+  if (this != &other) {
+    delete root;
+    root = nullptr;
+    std::swap(root, other.root);
+  }
+  return *this;
+}
