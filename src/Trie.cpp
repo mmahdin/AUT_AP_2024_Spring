@@ -85,3 +85,25 @@ bool Trie::startsWith(const std::string& prefix) const {
   }
   return 1;
 }
+
+void Trie::remove(const std::string& str) {
+  Node* node{root};
+  for (auto ch : str) {
+    int index{ch - 'a'};
+    node = node->children[index];
+  }
+
+  bool flg{0};
+  Node* parent;
+  node->is_finished = false;
+  for (std::size_t i{}; i < std::size(str); i++) {
+    for (auto child : node->children)
+      if (child != nullptr) {
+        return;
+        if (node->is_finished == 0) {
+          parent = node->parent;
+          delete node;
+        }
+        node = parent;
+      }
+  }
