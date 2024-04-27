@@ -51,3 +51,16 @@ Trie& Trie::operator=(Trie&& other) noexcept {
   }
   return *this;
 }
+
+void Trie::insert(const std::string& str) {
+  Node* node = root;
+  for (char ch : str) {
+    int index = ch - 'a';
+    if (node->children[index] == nullptr) {
+      node->children[index] = new Node(ch);
+      node->children[index]->parent = node;
+    }
+    node = node->children[index];
+  }
+  node->is_finished = true;
+}
