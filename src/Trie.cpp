@@ -75,3 +75,13 @@ bool Trie::search(const std::string& query) const {
   if (node->is_finished) return 1;
   return 0;
 }
+
+bool Trie::startsWith(const std::string& prefix) const {
+  Node* node{root};
+  for (auto ch : prefix) {
+    int index{ch - 'a'};
+    if (node->children[index] == nullptr) return 0;
+    node = node->children[index];
+  }
+  return 1;
+}
