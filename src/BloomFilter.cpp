@@ -98,3 +98,17 @@ std::ostream& operator<<(std::ostream& os, const BloomFilter<N>& bloom_filter) {
      << bloom_filter.bits;
   return os;
 }
+
+template <std::size_t N>
+std::istream& operator>>(std::istream& is, BloomFilter<N>& bloom_filter) {
+  std::string line;
+  std::getline(is, line);
+
+  std::istringstream iss(line);
+  std::string word;
+  while (iss >> word) {
+    add(word);
+  }
+
+  return is;
+}
