@@ -29,3 +29,5 @@ Trie::Trie(std::initializer_list<std::string> list) : root{new Node()} {
     insert(word);
   }
 }
+
+Trie::~Trie() { delete root; }
