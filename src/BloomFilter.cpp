@@ -90,3 +90,11 @@ template <std::size_t N>
 bool BloomFilter<N>::operator()(const std::string& item) const {
   return possiblyContains(item);
 }
+
+template <std::size_t N>
+std::ostream& operator<<(std::ostream& os, const BloomFilter<N>& bloom_filter) {
+  os << "num_hashes: " << bloom_filter.num_hashes << "\t"
+     << "num bits: " << N << std::endl
+     << bloom_filter.bits;
+  return os;
+}
