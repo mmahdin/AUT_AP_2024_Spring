@@ -4,6 +4,7 @@
 #include <bitset>  // Included for std::bitset
 #include <fstream>
 #include <functional>  // Included for std::hash
+#include <sstream>
 #include <string>
 #include <vector>
 

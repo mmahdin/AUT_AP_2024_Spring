@@ -2,10 +2,12 @@
 #define TRIE_H
 
 #include <array>
+#include <fstream>
 #include <functional>
 #include <initializer_list>
 #include <iostream>
 #include <queue>
+#include <sstream>
 #include <stack>
 #include <string>
 #include <utility>

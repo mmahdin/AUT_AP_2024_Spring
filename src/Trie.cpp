@@ -133,3 +133,20 @@ void Trie::bfs(std::function<void(Node*&)> func) {
       if (child != nullptr) q.push(child);
   }
 }
+
+std::ostream& operator<<(std::ostream& os, const Trie& trie) {
+  const_cast<Trie&>(trie).bfs([&os](Trie::Node*& node) { os << node->data; });
+  return os;
+}
+
+std::istream& operator>>(std::istream& is, Trie& trie) {
+  std::string line;
+  std::getline(is, line);
+
+  std::istringstream iss;
+  std::string word;
+  while (iss >> word) {
+    trie.insert(word);
+  }
+  return is;
+}

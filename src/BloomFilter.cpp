@@ -107,8 +107,7 @@ std::istream& operator>>(std::istream& is, BloomFilter<N>& bloom_filter) {
   std::istringstream iss(line);
   std::string word;
   while (iss >> word) {
-    add(word);
+    bloom_filter.add(word);
   }
-
   return is;
 }
