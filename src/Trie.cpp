@@ -120,3 +120,16 @@ void Trie::dfs(std::function<void(Node*&)> func) {
       if (child != nullptr) stk.push(child);
   }
 }
+
+void Trie::bfs(std::function<void(Node*&)> func) {
+  if (root == nullptr) return;
+  std::queue<Node*> q;
+  q.push(root);
+  while (!q.empty()) {
+    Node* current = q.front();
+    q.pop();
+    func(current);
+    for (auto child : current->children)
+      if (child != nullptr) q.push(child);
+  }
+}
