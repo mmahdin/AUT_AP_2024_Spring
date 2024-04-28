@@ -93,7 +93,6 @@ void Trie::remove(const std::string& str) {
     node = node->children[index];
   }
 
-  bool flg{0};
   Node* parent;
   node->is_finished = false;
   for (std::size_t i{}; i < std::size(str); i++) {
@@ -107,3 +106,17 @@ void Trie::remove(const std::string& str) {
         node = parent;
       }
   }
+}
+
+void Trie::dfs(std::function<void(Node*&)> func) {
+  if (root == nullptr) return;
+  std::stack<Node*> stk;
+  stk.push(root);
+  while (!stk.empty()) {
+    Node* current = stk.top();
+    stk.pop();
+    func(current);
+    for (auto child : current->children)
+      if (child != nullptr) stk.push(child);
+  }
+}

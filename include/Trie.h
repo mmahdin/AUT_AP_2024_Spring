@@ -48,12 +48,11 @@ class Trie {
                                         // removing the trace if needed.
 
   // Traversal and Utility
-  void bfs(std::function<void(Node*&)>
-               func);  // Breadth-first over the node and calling "func"
-                       // function over each of them
-  void dfs(std::function<void(Node*&)>
-               func);  // (BONUS), Depth-first over the node and calling "func"
-                       // function over each of them
+  // Breadth-first over the node and calling "func" function over each of them
+  void bfs(std::function<void(Node*&)> func);
+  // (BONUS), Depth-first over the node and calling "func" function over each of
+  // them
+  void dfs(std::function<void(Node*&)> func);
 
   // I/O operators
   friend std::ostream& operator<<(std::ostream& os,
