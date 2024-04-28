@@ -135,7 +135,17 @@ void Trie::bfs(std::function<void(Node*&)> func) {
 }
 
 std::ostream& operator<<(std::ostream& os, const Trie& trie) {
-  const_cast<Trie&>(trie).bfs([&os](Trie::Node*& node) { os << node->data; });
+  const_cast<Trie&>(trie).bfs([&os](Trie::Node*& node) {
+    if (node->is_finished) {
+      Trie::Node* current = node;
+      std::string word = "";
+      while (current->parent != nullptr) {
+        word = current->data + word;
+        current = current->parent;
+      }
+      os << word << std::endl;
+    }
+  });
   return os;
 }
 
@@ -150,3 +160,51 @@ std::istream& operator>>(std::istream& is, Trie& trie) {
   }
   return is;
 }
+
+Trie Trie::operator+(const Trie& other) const {
+  Trie result = *this;
+  result += other;
+  return result;
+}
+
+Trie& Trie::operator+=(const Trie& other) {
+  const_cast<Trie&>(other).bfs([this](Node*& node) {
+    if (node->is_finished) {
+      Node* current = node;
+      std::string word = "";
+      while (current->parent != nullptr) {
+        word = current->data + word;
+        current = current->parent;
+      }
+      this->insert(word);
+    }
+  });
+  return *this;
+}
+
+Trie Trie::operator-(const Trie& other) const {
+  Trie result = *this;
+  result -= other;
+  return result;
+}
+
+Trie& Trie::operator-=(const Trie& other) {
+  const_cast<Trie&>(other).bfs([this](Node*& node) {
+    if (node->is_finished) {
+      Node* current = node;
+      std::string word = "";
+      while (current->parent != nullptr) {
+        word = current->data + word;
+        current = current->parent;
+      }
+      this->remove(word);
+    }
+  });
+  return *this;
+}
+
+bool Trie::operator()(const std::string& query) const { return search(query); }
+
+bool Trie::operator==(const Trie& other) const { return root == other.root; }
+
+bool Trie::operator!=(const Trie& other) const { return !(*this == other); }
