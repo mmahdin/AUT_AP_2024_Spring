@@ -3,42 +3,44 @@
 // Pig Game JavaScript Implementation
 
 // Define variables to store player scores and current scores
-let scores, currentScore, activePlayer, playing;
+let scores, currentScore, playing, currentPlayer;
 
 
 // Selecting DOM elements
-const score0El = document.getElementById('player-0-score');
-const score1El = document.getElementById('player-1-score');
-const current0El = document.getElementById('player-0-current-amount');
-const current1El = document.getElementById('player-1-current-amount');
 const diceEl = document.querySelector('.dice-image');
 const player0El = document.querySelector('.player-0');
 const player1El = document.querySelector('.player-1');
 const btnRoll = document.querySelector('.btn-roll-dice');
-
-
 const btnHold = document.querySelector('.btn-hold-score');
 const btnNewGame = document.querySelector('.btn-new-game');
+const body = document.body || document.documentElement;
 
 // Initialize the game
 const init = () => {
   scores = [0, 0];
   currentScore = 0;
-  activePlayer = 0;
+  currentPlayer = 0;
   playing = true;
 
-  score0El.textContent = '0';
-  score1El.textContent = '0';
-  current0El.textContent = '0';
-  current1El.textContent = '0';
+  document.getElementById(`player-0-current-amount`).textContent = '0';
+  document.getElementById(`player-1-current-amount`).textContent = '0';
+  document.getElementById('player-0-score').textContent = '0';
+  document.getElementById('player-1-score').textContent = '0';
 
-  diceEl.classList.add('hidden');
+  document.querySelector('.dice-image').classList.add('hidden');
   player0El.classList.add('active-player');
   player1El.classList.remove('active-player');
+
+  btnHold.addEventListener('click', hold);
+  btnRoll.addEventListener('click', roolDice);
+
+  body.style.backgroundColor = '#69cbc0';
 };
 
-// Roll dice functionality
-btnRoll.addEventListener('click', () => {
+// Hold btn functionality
+btnHold.addEventListener('click', hold);
+
+function roolDice(){
   console.log("btn-roll-dice clicked ");
   if (playing) {
     // Generate random dice roll
@@ -52,13 +54,73 @@ btnRoll.addEventListener('click', () => {
     // Check if rolled 1
     if (dice !== 1) {
       currentScore += dice;
-      document.getElementById(`player-${activePlayer}-current-amount`).textContent = currentScore;
+      if(checkScore()){
+        playerWin();
+      }else {
+      setCurrentScore();
+      }
     } else {
+      scores[currentPlayer] = 0;
+      currentScore = 0;
+      updatePlayerScore();
       switchPlayer();
     }
   }
-});
+}
 
+// Roll dice functionality
+btnRoll.addEventListener('click', roolDice);
+
+
+function setCurrentScore(){
+  document.getElementById(`player-${currentPlayer}-current-amount`).textContent = currentScore;
+}
+
+function updatePlayerScore(){
+  scores[currentPlayer] += currentScore;
+  document.getElementById(`player-${currentPlayer}-score`).textContent = scores[currentPlayer];
+  currentScore = 0;
+}
+
+function togglePlayers(){
+  currentPlayer = (currentPlayer + 1) % 2;
+  player0El.classList.toggle('active-player');
+  player1El.classList.toggle('active-player');
+}
+
+function checkScore(){
+  if (currentScore + scores[currentPlayer] >= 10){return 1;}
+  else{return 0;} 
+}
+
+function switchPlayer(){
+  currentScore = 0;
+  setCurrentScore();
+  togglePlayers();
+}
+
+function hold(){
+  updatePlayerScore();
+  if(checkScore()){
+    playerWin();
+  }else {
+    switchPlayer();
+  }
+}
+
+function playerWin(){
+  playing = false;
+  updatePlayerScore();
+  diceEl.classList.add('hidden');
+  document.getElementById(`player-${currentPlayer}-current-amount`).textContent = '🎉';
+  body.style.backgroundColor = '#E64980';
+  btnHold.removeEventListener('click', hold);
+  btnRoll.removeEventListener('click', roolDice);
+}
+
+
+
+btnNewGame.addEventListener('click', init);
 
 init();
 
