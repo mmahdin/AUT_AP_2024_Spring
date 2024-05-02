@@ -29,7 +29,8 @@ const init = () => {
   document.getElementById('player-0-score').textContent = '0';
   document.getElementById('player-1-score').textContent = '0';
 
-  diceEl.classList.add('hidden');
+  // diceEl.classList.add('hidden');
+  diceEl.style.opacity = '0';
   player0El.classList.add('active-player');
   player1El.classList.remove('active-player');
 
@@ -53,7 +54,8 @@ function roolDice(){
 
     // Display the dice
     diceEl.src = `dice-${dice}.png`;
-    diceEl.classList.remove('hidden');
+    // diceEl.classList.remove('hidden');
+    diceEl.style.opacity = '1';
 
     // Check if rolled 1
     if (dice !== 1) {
@@ -115,7 +117,8 @@ function hold(){
 function playerWin(){
   playing = false;
   updatePlayerScore();
-  diceEl.classList.add('hidden');
+  // diceEl.classList.add('hidden');
+  diceEl.style.opacity = '0';
   document.getElementById(`player-${currentPlayer}-current-amount`).textContent = '🎉';
   body.style.backgroundColor = '#E64980';
   btnHold.removeEventListener('click', hold);
