@@ -15,6 +15,8 @@ const btnHold = document.querySelector('.btn-hold-score');
 const btnNewGame = document.querySelector('.btn-new-game');
 const body = document.body || document.documentElement;
 
+const windScore = 100;
+
 // Initialize the game
 const init = () => {
   scores = [0, 0];
@@ -27,7 +29,7 @@ const init = () => {
   document.getElementById('player-0-score').textContent = '0';
   document.getElementById('player-1-score').textContent = '0';
 
-  document.querySelector('.dice-image').classList.add('hidden');
+  diceEl.classList.add('hidden');
   player0El.classList.add('active-player');
   player1El.classList.remove('active-player');
 
@@ -35,6 +37,8 @@ const init = () => {
   btnRoll.addEventListener('click', roolDice);
 
   body.style.backgroundColor = '#69cbc0';
+
+  enableButtons();
 };
 
 // Hold btn functionality
@@ -89,7 +93,7 @@ function togglePlayers(){
 }
 
 function checkScore(){
-  if (currentScore + scores[currentPlayer] >= 10){return 1;}
+  if (currentScore + scores[currentPlayer] >= windScore){return 1;}
   else{return 0;} 
 }
 
@@ -116,8 +120,18 @@ function playerWin(){
   body.style.backgroundColor = '#E64980';
   btnHold.removeEventListener('click', hold);
   btnRoll.removeEventListener('click', roolDice);
+  disableButtons();
 }
 
+function disableButtons() {
+  btnHold.style.backgroundColor = 'gray';
+  btnRoll.style.backgroundColor = 'gray';
+}
+
+function enableButtons() {
+  btnHold.style.backgroundColor = '#e64980';
+  btnRoll.style.backgroundColor = '#228be6';
+}
 
 
 btnNewGame.addEventListener('click', init);
