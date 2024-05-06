@@ -66,9 +66,9 @@ function roolDice(){
       setCurrentScore();
       }
     } else {
-      scores[currentPlayer] = 0;
+      // scores[currentPlayer] = 0;
       currentScore = 0;
-      updatePlayerScore();
+      // updatePlayerScore();
       switchPlayer();
     }
   }
