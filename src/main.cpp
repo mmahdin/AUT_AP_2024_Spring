@@ -17,7 +17,8 @@ int main(int argc, char **argv) {
     assert(testMessage.get_type() == "text");
     assert(testMessage.get_sender() == "Alice");
     assert(testMessage.get_receiver() == "Bob");
-    testMessage.print(std::cout);
+    // testMessage.print(std::cout);
+    std::cout << testMessage << std::endl;
     std::cout << "@@@@@ All tests passed for Message class. @@@@@" << std::endl;
 
     std::cout << "\n" << std::endl;
@@ -25,10 +26,12 @@ int main(int argc, char **argv) {
     TextMessage testTextMessage("Hello, Bob!", "Alice", "Bob");
     std::cout << "****** Testing TextMessage Print Function ******"
               << std::endl;
-    testTextMessage.print(std::cout);
+    // testTextMessage.print(std::cout);
+    std::cout << testTextMessage << std::endl;
     std::cout << testTextMessage.get_text() << std::endl;
     std::cout << "@@@@@ All tests passed for TextMessage print function. @@@@@"
               << std::endl;
+
   } else {
     ::testing::InitGoogleTest(&argc, argv);
     std::cout << "RUNNING TESTS ..." << std::endl;

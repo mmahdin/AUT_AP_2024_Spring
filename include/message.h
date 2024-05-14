@@ -18,8 +18,8 @@ class Message {
   std::string get_receiver() const;
   std::string get_time() const;
 
-  // Print function for use in operator<< overloading
-  void print(std::ostream &os) const;
+  // Virtual Print function for use in operator<< overloading
+  virtual void print(std::ostream &os) const;
 
   // Overload operator<< to work with Message objects
   friend std::ostream &operator<<(std::ostream &os, const Message &msg);
@@ -36,8 +36,8 @@ class TextMessage : public Message {
   // Constructor
   TextMessage(std::string text, std::string sender, std::string receiver);
 
-  // Member function for printing
-  void print(std::ostream &os) const;
+  // Overridden member function for printing
+  void print(std::ostream &os) const override;
 
   // Getter function for the text content
   std::string get_text() const;
