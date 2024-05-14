@@ -31,4 +31,19 @@ class Message {
   std::string time;      // Creation time of the message in GMT
 };
 
+class TextMessage : public Message {
+ public:
+  // Constructor
+  TextMessage(std::string text, std::string sender, std::string receiver);
+
+  // Member function for printing
+  void print(std::ostream &os) const;
+
+  // Getter function for the text content
+  std::string get_text() const;
+
+ private:
+  std::string text;  // The text content of the message
+};
+
 #endif  // MESSAGE_H

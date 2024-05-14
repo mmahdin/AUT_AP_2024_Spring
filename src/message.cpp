@@ -20,11 +20,24 @@ void Message::print(std::ostream& os) const {
   os << "*************************\n"
      << sender << "->" << receiver << "\n"
      << "message type: " << type << "\n"
-     << "message time:" << time << "\n"
-     << "*************************" << std::endl;
+     << "message time:" << time << "*************************" << std::endl;
 }
 
 std::ostream& operator<<(std::ostream& os, const Message& msg) {
   msg.print(os);
   return os;
 }
+
+TextMessage::TextMessage(std::string text, std::string sender,
+                         std::string receiver)
+    : Message("Text", sender, receiver), text{text} {}
+
+void TextMessage::print(std::ostream& os) const {
+  os << "*************************\n"
+     << get_sender() << "->" << get_receiver() << "\n"
+     << "message type: " << get_type() << "\n"
+     << "message time:" << get_time() << "text: " << text
+     << "\n*************************" << std::endl;
+}
+
+std::string TextMessage::get_text() const { return text; }

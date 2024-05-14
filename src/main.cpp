@@ -11,8 +11,24 @@ int main(int argc, char **argv) {
   if (true)  // make false to run unit-tests
   {
     // debug section
-    Message msg{"salam", "man", "mahdi"};
-    std::cout << msg << std::endl;
+    Message testMessage("text", "Alice", "Bob");
+    std::cout << "****** Testing Message Creation and Display ******"
+              << std::endl;
+    assert(testMessage.get_type() == "text");
+    assert(testMessage.get_sender() == "Alice");
+    assert(testMessage.get_receiver() == "Bob");
+    testMessage.print(std::cout);
+    std::cout << "@@@@@ All tests passed for Message class. @@@@@" << std::endl;
+
+    std::cout << "\n" << std::endl;
+
+    TextMessage testTextMessage("Hello, Bob!", "Alice", "Bob");
+    std::cout << "****** Testing TextMessage Print Function ******"
+              << std::endl;
+    testTextMessage.print(std::cout);
+    std::cout << testTextMessage.get_text() << std::endl;
+    std::cout << "@@@@@ All tests passed for TextMessage print function. @@@@@"
+              << std::endl;
   } else {
     ::testing::InitGoogleTest(&argc, argv);
     std::cout << "RUNNING TESTS ..." << std::endl;
