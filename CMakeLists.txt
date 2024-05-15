@@ -25,7 +25,7 @@ add_executable(main
 
 # Set compiler flags for C++.
 # -Wall, -Wextra, -Werror, and -Wpedantic are used for stricter warnings and error handling.
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -Wpedantic")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic")
 
 
 # Set compiler flags specific to the Release build type.

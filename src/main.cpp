@@ -2,10 +2,11 @@
 
 #include <iostream>
 
+#include "crypto.h"
 #include "message.h"
-// #include "server.h"
+#include "server.h"
 // #include "stl.h"
-// #include "user.h"
+#include "user.h"
 
 int main(int argc, char **argv) {
   if (true)  // make false to run unit-tests
@@ -38,6 +39,11 @@ int main(int argc, char **argv) {
     std::cout << testVoiceMessage << std::endl;
     std::cout << "@@@@@ All tests passed for VoiceMessage class. @@@@@"
               << std::endl;
+
+    std::cout << "****** crypto ******" << std::endl;
+    std::string public_key, private_key;
+    crypto::generate_key(public_key, private_key);
+    std::cout << "@@@@@ crypto @@@@@" << std::endl;
 
   } else {
     ::testing::InitGoogleTest(&argc, argv);

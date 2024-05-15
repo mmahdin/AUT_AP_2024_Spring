@@ -19,6 +19,7 @@ class Message {
   std::string get_sender() const;
   std::string get_receiver() const;
   std::string get_time() const;
+  // virtual std::string get_text() const { return ""; }
 
   // Virtual Print function for use in operator<< overloading
   virtual void print(std::ostream &os) const;
@@ -42,7 +43,7 @@ class TextMessage : public Message {
   void print(std::ostream &os) const override;
 
   // Getter function for the text content
-  std::string get_text() const;
+  virtual std::string get_text() const;
 
  private:
   std::string text;  // The text content of the message
