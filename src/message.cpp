@@ -41,3 +41,23 @@ void TextMessage::print(std::ostream& os) const {
 }
 
 std::string TextMessage::get_text() const { return text; }
+
+VoiceMessage::VoiceMessage(std::string sender, std::string receiver)
+    : Message("Voice", sender, receiver) {
+  std::srand(std::time(nullptr));  // Seed the random number generator
+  for (std::size_t i = 0; i < 5; i++) {
+    voice.push_back(static_cast<unsigned char>(
+        std::rand() % 256));  // Push a random 8-bit number into voice
+  }
+}
+
+void VoiceMessage::print(std::ostream& os) const {
+  os << "*************************\n"
+     << get_sender() << "->" << get_receiver() << "\n"
+     << "message type: " << get_type() << "\n"
+     << "message time:" << get_time() << "voice: ";
+  for (auto& i : voice) os << std::to_string(i) + ' ';
+  os << "\n*************************" << std::endl;
+}
+
+std::vector<unsigned char> VoiceMessage::get_voice() const { return voice; }

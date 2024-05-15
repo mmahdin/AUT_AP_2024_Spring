@@ -32,6 +32,13 @@ int main(int argc, char **argv) {
     std::cout << "@@@@@ All tests passed for TextMessage print function. @@@@@"
               << std::endl;
 
+    VoiceMessage testVoiceMessage("Alice", "Bob");
+    std::cout << "****** Testing VoiceMessage Functionality ******"
+              << std::endl;
+    std::cout << testVoiceMessage << std::endl;
+    std::cout << "@@@@@ All tests passed for VoiceMessage class. @@@@@"
+              << std::endl;
+
   } else {
     ::testing::InitGoogleTest(&argc, argv);
     std::cout << "RUNNING TESTS ..." << std::endl;
