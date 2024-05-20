@@ -1,6 +1,7 @@
 #ifndef INGREDIENT_H
 #define INGREDIENT_H
 
+#include <iostream>
 #include <string>
 
 class Ingredient {

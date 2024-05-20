@@ -1,12 +1,13 @@
 #ifndef CAPPUCCINO
 #define CAPPUCCINO
 
-#include <espresso_based.h>
-
 #include <string>
 #include <vector>
 
-class Cappuccino {
+#include "espresso_based.h"
+#include "sub_ingredients.h"
+
+class Cappuccino : public EspressoBased {
  public:
   Cappuccino();
   Cappuccino(const Cappuccino& cap);
@@ -21,6 +22,19 @@ class Cappuccino {
 
  private:
   std::vector<Ingredient*> side_items;
+  unsigned* cnt;
+  void release() {
+    if (cnt) {
+      if (--(*cnt) == 0) {
+        for (auto& item : side_items) delete item;
+        side_items.clear();
+        for (const auto& i : ingredients) delete i;
+        ingredients.clear();
+        delete cnt;
+      }
+    }
+    cnt = nullptr;
+  }
 };
 
 #endif  // CAPPUCCINO
