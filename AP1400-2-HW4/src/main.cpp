@@ -36,6 +36,33 @@ int main(int argc, char** argv) {
     // std::cout << *mahdi << std::endl;
     // debug section
 
+    SharedPtr<int> ptr1{new int{10}};
+    std::cout << ptr1.getn() << std::endl;
+    SharedPtr<int> ptr2{ptr1};
+    std::cout << ptr2.getn() << std::endl;
+
+    SharedPtr<int> ptr3{ptr1};
+    std::cout << ptr3.getn() << std::endl;
+    SharedPtr<int> ptr4{ptr2};
+    std::cout << ptr4.getn() << std::endl;
+    ptr3 = ptr4;
+    std::cout << ptr3.getn() << std::endl;
+    std::cout << ptr4.getn() << std::endl;
+
+    SharedPtr<int> ptr5{new int{10}};
+    std::cout << *ptr5 << std::endl;  // output: 10
+
+    SharedPtr<std::string> ptr6{new std::string{"hello"}};
+    std::cout << ptr6->length() << std::endl;  // output: 5
+
+    std::cout << "reset test " << std::endl;
+    ptr6.reset();
+
+    SharedPtr<std::string> ptr7{new std::string{"hello"}};
+    std::cout << *ptr7.get() << std::endl;
+    ptr7.reset(new std::string{"salam"});
+    std::cout << *ptr7.get() << std::endl;
+
   } else {
     ::testing::InitGoogleTest(&argc, argv);
     std::cout << "RUNNING TESTS ..." << std::endl;
