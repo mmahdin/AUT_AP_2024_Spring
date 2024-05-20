@@ -12,7 +12,7 @@ class Cinnamon : public Ingredient {
   std::string get_name() override { return this->name; }
   double price() override { return price_unit * units; }
 };
-/**/
+
 class Chocolate : public Ingredient {
  public:
   Chocolate(size_t units) : Ingredient{5, units} { this->name = "Chocolate"; }

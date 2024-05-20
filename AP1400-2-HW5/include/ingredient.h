@@ -11,6 +11,8 @@ class Ingredient {
 
   virtual double price() = 0;
 
+  virtual ~Ingredient() = default;
+
  protected:
   Ingredient(double price_unit, size_t units)
       : price_unit{price_unit}, units{units} {}

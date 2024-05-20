@@ -13,7 +13,7 @@ class EspressoBased {
   void brew();
   std::vector<Ingredient*>& get_ingredients();
 
-  ~EspressoBased();
+  virtual ~EspressoBased();
 
  protected:
   EspressoBased();
@@ -23,10 +23,5 @@ class EspressoBased {
   std::vector<Ingredient*> ingredients;
   std::string name;
 };
-
-// EspressoBased::~EspressoBased() {
-//   for (const auto& i : ingredients) delete i;
-//   ingredients.clear();
-// }
 
 #endif  // ESPRESSO_BASED_H
