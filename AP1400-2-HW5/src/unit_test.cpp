@@ -97,33 +97,36 @@ TEST(HW5Test, TEST9) {
   equal = equal;
   EXPECT_EQ(equal.price(), 57);
 }
-/*
+
 TEST(HW5Test, TEST10) {
-    Mocha mocha{};
-    EXPECT_EQ(mocha.get_name(), "Mocha");
-    auto ingredients = mocha.get_ingredients();
+  Mocha mocha{};
+  EXPECT_EQ(mocha.get_name(), "Mocha");
+  auto ingredients = mocha.get_ingredients();
 
-    EXPECT_EQ(ingredients.size(), 4);
-    for(const auto& i : ingredients)
-        EXPECT_TRUE(i->get_name() == "Espresso" || i->get_name() == "Milk" ||
-i->get_name() == "MilkFoam" || i->get_name() == "Chocolate");
-    EXPECT_DOUBLE_EQ(mocha.price(), 60);
+  EXPECT_EQ(ingredients.size(), 4);
+  for (const auto& i : ingredients)
+    EXPECT_TRUE(i->get_name() == "Espresso" || i->get_name() == "Milk" ||
+                i->get_name() == "MilkFoam" || i->get_name() == "Chocolate");
+  EXPECT_DOUBLE_EQ(mocha.price(), 60);
 
-    EspressoBased* esp{new Mocha{}};
-    reinterpret_cast<Cappuccino*>(esp)->add_side_item(new Cookie{1});
-    reinterpret_cast<Cappuccino*>(esp)->add_side_item(new Sugar{2});
-    std::vector<Ingredient*>& sides =
-reinterpret_cast<Cappuccino*>(esp)->get_side_items(); EXPECT_EQ(sides.size(),
-2); delete esp; EXPECT_EQ(sides.size(), 0);
+  EspressoBased* esp{new Mocha{}};
+  reinterpret_cast<Cappuccino*>(esp)->add_side_item(new Cookie{1});
+  reinterpret_cast<Cappuccino*>(esp)->add_side_item(new Sugar{2});
+  std::vector<Ingredient*>& sides =
+      reinterpret_cast<Cappuccino*>(esp)->get_side_items();
+  EXPECT_EQ(sides.size(), 2);
+  delete esp;
+  EXPECT_EQ(sides.size(), 0);
 }
-
+/*
 TEST(HW5Test, TEST11) {
-    Cappuccino cappuccino{};
-    cappuccino.brew();
+  Cappuccino cappuccino{};
+  cappuccino.brew();
 }
 
 TEST(HW5Test, TEST12) {
-    Mocha mocha{};
-    mocha.brew();
+  Mocha mocha{};
+  mocha.brew();
 }
-*/
+
+ */
