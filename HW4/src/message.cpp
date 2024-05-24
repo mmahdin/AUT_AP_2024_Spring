@@ -49,6 +49,10 @@ VoiceMessage::VoiceMessage(std::string sender, std::string receiver)
     voice.push_back(static_cast<unsigned char>(
         std::rand() % 256));  // Push a random 8-bit number into voice
   }
+  for (std::size_t i = 0; i < 5; i++) {
+    text += std::to_string((std::rand() % 256));
+    text += " ";
+  }
 }
 
 void VoiceMessage::print(std::ostream& os) const {
@@ -61,3 +65,5 @@ void VoiceMessage::print(std::ostream& os) const {
 }
 
 std::vector<unsigned char> VoiceMessage::get_voice() const { return voice; }
+
+std::string VoiceMessage::get_text() const { return text; }

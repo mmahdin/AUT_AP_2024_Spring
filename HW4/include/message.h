@@ -43,7 +43,7 @@ class TextMessage : public Message {
   void print(std::ostream &os) const override;
 
   // Getter function for the text content
-  virtual std::string get_text() const;
+  std::string get_text() const;
 
  private:
   std::string text;  // The text content of the message
@@ -59,9 +59,11 @@ class VoiceMessage : public Message {
 
   // Getter function for the voice data
   std::vector<unsigned char> get_voice() const;
+  std::string get_text() const;
 
  private:
   std::vector<unsigned char> voice;  // Array of bytes to store the voice data
+  std::string text;
 };
 
 #endif  // MESSAGE_H
