@@ -24,7 +24,7 @@ The constructor of this class takes the following arguments: `first_name`, `last
 - `faculty` and `university` are instances of the `Faculty` and `University` classes, respectively.
 - Each student has a unique, immutable 6-digit student number. Attempting to modify it should raise a `ConstError`.
 - Implement the `ConstError` exception in `exceptions.py`.
-- The `get_age()` method should return the age of the student.
+- The `get_age()` method should return the age of the student. if today is 2/2/2024 and birthday is 1/2/2000 you should return 24 and if birhday is 3/2/2000 you should return 21.
 - This class should be printable and output the format: `I am (first name) (last name) and studying at (university)`.
 
 ### 3. Professor Class
@@ -33,7 +33,8 @@ The constructor takes the following arguments: `first_name`, `last_name`, `birth
 - This class should be printable and output the format: `I am (academic rank) (first name) (last name) and studying at (university)`.
 - The `academic_rank` must be one of the following: Professor, Associate Professor, Assistant Professor, Lecturer. Otherwise, raise a `ValueError`.
 - The `get_age()` method should return the age of the professor.
-- Implement the `hack_salary` function to return the salary of a professor.
+
+**Person, Student and Professor classes must be implemented in person.py file.**
 
 ### 4. University Class
 This class has member variables: `name`, `established`, `chancellor`, and `faculties`.
@@ -50,6 +51,8 @@ The constructor takes the following arguments: `name` and `university`, with opt
 - Summing two faculties together should merge their professors into the first faculty.
 - Using the `%` operator should filter and return a list of students with a GPA greater than or equal to a specified value.
 - Ensure that membership checks (`in` operator) work for both professors and students in a faculty.
+
+**Faculty and University classes must be implemented in university.py file.**
 
 ## Section 2: Python Decorators
 
