@@ -31,9 +31,6 @@ User Server::create_user(std::string username) {
 bool Server::create_message(Message* msg, std::string signature) {
   bool authentic = crypto::verifySignature(public_keys[msg->get_sender()],
                                            msg->get_text(), signature);
-  std::cout << "sender: " << msg->get_sender() << std::endl;
-  std::cout << "message in create massage function: " << msg->get_text()
-            << std::endl;
   if (authentic) {
     messages.push_back(msg);
     return true;

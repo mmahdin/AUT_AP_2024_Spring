@@ -40,13 +40,15 @@ std::string vector_to_string(std::vector<int> v, char separator) {
 }
 
 void square_elements(std::vector<int>& v) {
-  std::transform(v.begin(), v.end(), v.begin(), [](int x) { return x * x; });
+  std::transform(v.begin(), v.end(), v.begin(), [](int& x) { return x * x; });
 }
 
 void copy_if_even(const std::vector<int>& source,
                   std::vector<int>& destination) {
-  std::copy_if(source.begin(), source.end(), std::back_inserter(destination),
+  std::vector<int> copyvec{};
+  std::copy_if(source.begin(), source.end(), std::back_inserter(copyvec),
                [](int x) { return x % 2 == 0; });
+  destination = copyvec;
 }
 
 #endif  // STL_H

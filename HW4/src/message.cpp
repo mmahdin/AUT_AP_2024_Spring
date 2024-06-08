@@ -2,8 +2,9 @@
 
 Message::Message(std::string type, std::string sender, std::string receiver)
     : type{type}, sender{sender}, receiver{receiver} {
-  std::time_t currentTime = std::time(nullptr);
-  time = std::ctime(&currentTime);
+  std::time_t now = std::time(0);
+	time = std::ctime(&now);
+	time.erase(time.find_last_not_of(" \n\r\t") + 1);
 }
 
 Message::Message() : Message{"", "", ""} {}
@@ -30,7 +31,7 @@ std::ostream& operator<<(std::ostream& os, const Message& msg) {
 
 TextMessage::TextMessage(std::string text, std::string sender,
                          std::string receiver)
-    : Message("Text", sender, receiver), text{text} {}
+    : Message("text", sender, receiver), text{text} {}
 
 void TextMessage::print(std::ostream& os) const {
   os << "*************************\n"
@@ -43,7 +44,7 @@ void TextMessage::print(std::ostream& os) const {
 std::string TextMessage::get_text() const { return text; }
 
 VoiceMessage::VoiceMessage(std::string sender, std::string receiver)
-    : Message("Voice", sender, receiver) {
+    : Message("voice", sender, receiver) {
   std::srand(std::time(nullptr));  // Seed the random number generator
   for (std::size_t i = 0; i < 5; i++) {
     voice.push_back(static_cast<unsigned char>(
