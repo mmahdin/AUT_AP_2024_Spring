@@ -28,7 +28,7 @@ The constructor of this class takes the following arguments: `first_name`, `last
 - `faculty` and `university` are instances of the `Faculty` and `University` classes, respectively.
 - Each student has a unique, immutable 6-digit student number. Attempting to modify it should raise a `ConstError`.
 - Implement the `ConstError` exception in `exceptions.py`.
-- The `get_age()` method should return the age of the student. if today is 2/2/2024 and birthday is 1/2/2000 you should return 24 and if birhday is 3/2/2000 you should return 21.
+- The `get_age()` method should return the age of the student. if today is 2/2/2024 and birthday is 1/2/2000 you should return 24 and if birhday is 3/2/2000 you should return 23.
 - This class should be printable and output the format: `I am (first name) (last name) and studying at (university)`.
 
 ### 3. Professor Class
