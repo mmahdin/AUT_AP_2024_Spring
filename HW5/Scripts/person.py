@@ -1,6 +1,8 @@
 from datetime import date
-from exceptions import ConstError
 import random
+
+class ConstError(Exception):
+    pass
 
 class Person:
     def __init__(self, first_name, last_name, birthday, gender):
@@ -32,6 +34,10 @@ class Student(Person):
         self._student_number = self._generate_unique_student_number()
 
     @property
+    def student_number(self):
+        pass
+
+    @student_number.getter
     def student_number(self):
         return self._student_number
 
