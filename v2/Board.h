@@ -19,7 +19,7 @@ public:
     void display() const;
     const Player& getPlayer(int playerId) const;
     bool validWall(int hv, int x, int y);
-    bool blockPath();
+    bool is_path_to_end(std::pair<int,int> start, int end_row);
     int validMove(int x, int y);
 
 private:
@@ -31,5 +31,9 @@ private:
 
     void initializeGrid();
 };
+
+bool is_valid_point(int x, int y, int board_size);
+std::vector<std::pair<int,int>> dirction2position(int direction, int x, int y);
+
 
 #endif // BOARD_H

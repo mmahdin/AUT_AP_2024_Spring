@@ -2,3 +2,5 @@ board.cpp
 board.o
 main
 main.o
+v2/.vscode/settings.json
+v2/obj/Board.o
