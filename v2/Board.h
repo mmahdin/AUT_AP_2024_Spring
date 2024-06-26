@@ -18,11 +18,13 @@ public:
     void movePlayer(int playerId, int newX, int newY); // player position
     void display() const;
     const Player& getPlayer(int playerId) const;
+    bool validWall(bool hv, int x, int y);
+    bool blockPath();
 
 private:
     static const int size = 17;
     char grid[size][size];
-    std::vector<std::pair<int, int>> walls;
+    std::vector<std::pair<int,int>> walls;
     Player player1;
     Player player2;
 

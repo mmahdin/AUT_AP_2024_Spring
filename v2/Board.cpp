@@ -1,4 +1,5 @@
 #include "Board.h"
+#include <algorithm>
 
 Board::Board() : player1(0, 4, '1'), player2(8, 4, '2') {
     initializeGrid();
@@ -18,10 +19,12 @@ void Board::initializeGrid() {
 }
 
 void Board::addWall(int x, int y, bool horizontal) {
-    // x and y should represent the position of the player that you wish to target.
+    if (!validWall(horizontal, x, y)) return;
+    walls.push_back({x,y});
+    // x and y should represent the position of the players place
     x = 2*x;
     y = 2*y;
-    walls.push_back({x, y});
+    
     if (horizontal) {
         grid[x+1][y] = '-';
         grid[x+1][y + 2] = '-';
@@ -50,3 +53,17 @@ void Board::display() const {
 const Player& Board::getPlayer(int playerId) const {
     return (playerId == 1) ? player1 : player2;
 }
+
+bool Board::validWall(bool hv, int x, int y){
+    auto it = std::find_if(walls.begin(), walls.end(), [&hv, &x, &y](const std::pair<int,int>& v){
+        if (x==v.first && y==v.second) return true;
+        else if (x==v.first && (y==(v.second-1) || y==(v.second+1)) && hv==true) return true;
+        else if((x==(v.first-1) || x==(v.first+1)) && y==v.second && hv==false) return true;
+        else return false;
+    });
+    if (it != walls.end()) return false;
+    // else if (blockPath()) return false;
+    else return true;
+}
+
+bool Board::blockPath(){}
