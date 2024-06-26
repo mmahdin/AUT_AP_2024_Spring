@@ -14,17 +14,18 @@ The wall will be placed next to the specified player.
 class Board {
 public:
     Board();
-    void addWall(int x, int y, bool horizontal); // x and y are the position of player
+    void addWall(int x, int y, int horizontal); // x and y are the position of player
     void movePlayer(int playerId, int newX, int newY); // player position
     void display() const;
     const Player& getPlayer(int playerId) const;
-    bool validWall(bool hv, int x, int y);
+    bool validWall(int hv, int x, int y);
     bool blockPath();
+    int validMove(int x, int y);
 
 private:
     static const int size = 17;
     char grid[size][size];
-    std::vector<std::pair<int,int>> walls;
+    std::vector<std::vector<int>> walls;
     Player player1;
     Player player2;
 

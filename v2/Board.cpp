@@ -1,5 +1,6 @@
 #include "Board.h"
 #include <algorithm>
+#include <iostream>
 
 Board::Board() : player1(0, 4, '1'), player2(8, 4, '2') {
     initializeGrid();
@@ -18,9 +19,9 @@ void Board::initializeGrid() {
     grid[player2.getX()][player2.getY()] = player2.getId();
 }
 
-void Board::addWall(int x, int y, bool horizontal) {
+void Board::addWall(int x, int y, int horizontal) {
     if (!validWall(horizontal, x, y)) return;
-    walls.push_back({x,y});
+    walls.push_back(std::vector<int>{horizontal, x, y});
     // x and y should represent the position of the players place
     x = 2*x;
     y = 2*y;
@@ -54,11 +55,12 @@ const Player& Board::getPlayer(int playerId) const {
     return (playerId == 1) ? player1 : player2;
 }
 
-bool Board::validWall(bool hv, int x, int y){
-    auto it = std::find_if(walls.begin(), walls.end(), [&hv, &x, &y](const std::pair<int,int>& v){
-        if (x==v.first && y==v.second) return true;
-        else if (x==v.first && (y==(v.second-1) || y==(v.second+1)) && hv==true) return true;
-        else if((x==(v.first-1) || x==(v.first+1)) && y==v.second && hv==false) return true;
+bool Board::validWall(int hv, int x, int y){
+    // checing if the wall that player want to place has confilict with previos walls
+    auto it = std::find_if(walls.begin(), walls.end(), [&hv, &x, &y](const std::vector<int>& v){
+        if (x==v[1] && y==v[2]) return true;
+        else if (x==v[1] && (y==(v[2]-1) || y==(v[2]+1)) && hv==1 && v[0]==1) return true;
+        else if((x==(v[1]-1) || x==(v[1]+1)) && y==v[2] && hv==0 && v[0]==0) return true;
         else return false;
     });
     if (it != walls.end()) return false;
@@ -66,4 +68,19 @@ bool Board::validWall(bool hv, int x, int y){
     else return true;
 }
 
-bool Board::blockPath(){}
+bool Board::blockPath(){
+    return true;
+}
+
+int Board::validMove(int x, int y){
+    int directions{15}; // udlf :up down left right
+    for (auto& v : walls){
+        if( (x==v[1] && y==v[2] && v[0]==1) || (x==v[1] && (y-1)==v[2] && v[0]==1) ) directions &= 11;
+        if( ((x-1)==v[1] && y==v[2] && v[0]==1) || ((x-1)==v[1] && (y-1)==v[2] && v[0]==1) ) directions &= 7;
+        if ( (x==v[1] && y==v[2] && v[0]==0) || ((x-1)==v[1] && y==v[2] && v[0]==0) ) directions &= 14;
+        if( (x==v[1] && (y-1)==v[2] && v[0]==0) || ((x-1)==v[1] && (y-1)==v[2] && v[0]==0) ) directions &= 13;
+    }
+    return directions;
+}
+
+

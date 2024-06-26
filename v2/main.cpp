@@ -2,18 +2,13 @@
 
 int main() {
     Board board;
-    board.display();std::cout << std::endl;
 
-    board.movePlayer(1, 1, 4);  // Move player 1 to position (1, 4)
-    std::cout << "After moves:" << std::endl;
-    board.display(); std::cout << std::endl;
+    board.movePlayer(1, 4, 4);  // Move player 1 to position (1, 4)
 
-    board.addWall(1, 4, true);  // Place a horizontal wall at position (1, 4)
-    std::cout << "After wall placement (horizontal):" << std::endl;
-    board.display();std::cout << std::endl;
-
-    board.addWall(1, 4, false);  // Place a vertical wall at position (1, 4)
-    std::cout << "After wall placement (vertical):" << std::endl;
+    board.addWall(2, 3, 0);  // Place a horizontal wall at position (1, 4)
+    board.addWall(3, 4, 0);  // Place a vertical wall at position (1, 4)
+    board.addWall(4, 3, 1);  // Place a vertical wall at position (1, 4)
+    std::cout << "direction: " << board.validMove(4,4) << std::endl;
     board.display();
 
     return 0;
