@@ -1,10 +1,11 @@
-# File: Makefile
-
 # Compiler
 CXX = g++
 
 # Compiler flags
-CXXFLAGS = -Wall -std=c++23
+CXXFLAGS = -Wall -std=c++23 -fPIE
+
+# Linker flags
+LDFLAGS = -fPIE
 
 # Directories
 SRC_DIR = .
@@ -32,7 +33,7 @@ $(BIN_DIR):
 
 # Rule to build the executable
 $(TARGET): $(OBJ_DIR) $(BIN_DIR) $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $(OBJS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $(OBJS)
 
 # Rule to build object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
