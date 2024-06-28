@@ -1,12 +1,18 @@
 INFO: Game started
 INFO: Grid initialized
 INFO: Board initialized
-DEBUG: Player 1 moved to (0, 3)
-DEBUG: Wall added at (0, 0), horizontal: 1
-DEBUG: Wall added at (2, 14), horizontal: 0
-DEBUG: Wall added at (0, 4), horizontal: 1
-DEBUG: Wall added at (0, 8), horizontal: 1
-DEBUG: Wall added at (0, 12), horizontal: 1
+DEBUG: Player 1 moved to (1, 4)
+DEBUG: Player 1 moved to (2, 4)
+DEBUG: Player 1 moved to (3, 4)
+DEBUG: Player 1 moved to (4, 4)
+DEBUG: Wall added at (4, 6), horizontal: 0
+DEBUG: Wall added at (6, 8), horizontal: 0
+DEBUG: Wall added at (8, 6), horizontal: 1
+DEBUG: Wall added at (4, 8), horizontal: 1
+DEBUG: Wall added at (8, 4), horizontal: 0
+DEBUG: Wall added at (4, 4), horizontal: 0
+DEBUG: Wall added at (0, 6), horizontal: 0
 INFO: Wall blocks path to end for Player 1
+DEBUG: Player 1 moved to (4, 5)
 INFO: Board displayed
 INFO: Game ended

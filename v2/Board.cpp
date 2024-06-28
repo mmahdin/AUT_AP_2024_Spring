@@ -52,7 +52,7 @@ bool Board::is_possible_to_move(Player& player, int newX, int newY) {
         return false;
     }
 
-    std::bitset<4> valid_moves(validMove(player.getX() / 2, player.getY() / 2));
+    std::bitset<4> valid_moves(validMove(player.getX() / 2, player.getY() / 2, walls));
     if (newY - player.getY() == 1 && !valid_moves[0]) {
         logger.log("Move down is blocked", Logger::DEBUG);
         return false;
@@ -100,7 +100,6 @@ void Board::addWall(int x, int y, int horizontal) {
     logger.log("Wall added at (" + std::to_string(x) + ", " + std::to_string(y) + "), horizontal: " + std::to_string(horizontal), Logger::DEBUG);
 }
 
-
 bool Board::validWall(int hv, int x, int y) {
     // Check if the wall position conflicts with existing walls
     auto it = std::find_if(walls.begin(), walls.end(), [&hv, &x, &y](const std::vector<int>& v){
@@ -124,12 +123,12 @@ bool Board::validWall(int hv, int x, int y) {
     int y2 = player2.getY() / 2;
 
     // Check if the wall blocks the path of both players to their respective goals
-    if (!is_path_to_end(std::pair<int,int>{x1,y1}, 0) || !is_path_to_end(std::pair<int,int>{x1,y1}, 8)){
+    if (!is_path_to_end_AS(std::pair<int,int>{x1,y1}, 0, walls) || !is_path_to_end_AS(std::pair<int,int>{x1,y1}, 8, walls)){
         logger.log("Wall blocks path to end for Player 1", Logger::LogLevel::INFO);
         walls.pop_back();
         return false; // Wall blocks player 1's path
     }
-    if (!is_path_to_end(std::pair<int,int>{x2,y2}, 0) || !is_path_to_end(std::pair<int,int>{x2,y2}, 8)){
+    if (!is_path_to_end_AS(std::pair<int,int>{x2,y2}, 0, walls) || !is_path_to_end_AS(std::pair<int,int>{x2,y2}, 8, walls)){
         logger.log("Wall blocks path to end for Player 2", Logger::LogLevel::INFO);
         walls.pop_back();
         return false; // Wall blocks player 2's path
@@ -141,40 +140,11 @@ bool Board::validWall(int hv, int x, int y) {
     return true; // Wall can be placed without blocking player paths
 }
 
-
-bool Board::is_path_to_end(std::pair<int,int> start, int end_row){
-    std::queue<std::pair<int,int>> q;
-    q.push(start);
-
-    std::set<std::pair<int, int>> visited;
-    visited.insert({start.first, start.second});
-
-    while (!q.empty()) {
-        std::pair<int,int> current = q.front();
-        q.pop();
-        
-        if (current.first == end_row) {
-            return true;
-        }
-
-        int directions = validMove(current.first, current.second);
-        std::vector<std::pair<int,int>> moves = dirction2position(directions, current.first, current.second);
-
-        for (const auto& move : moves) {
-            if (is_valid_point(move.first, move.second, 9) && visited.find({move.first, move.second}) == visited.end()) {
-                q.push(move);
-                visited.insert({move.first, move.second});
-            }
-        }
-    }
-    return false;
-}
-
 bool is_valid_point(int x, int y, int board_size) {
     return x >= 0 && x < board_size && y >= 0 && y < board_size;
 }
 
-int Board::validMove(int x, int y) {
+int validMove(int x, int y, std::vector<std::vector<int>>& walls) {
     int directions{15}; // 15 in binary is 1111, representing all four directions: up, down, left, right
 
     for (auto& v : walls) {

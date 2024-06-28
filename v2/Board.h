@@ -4,7 +4,17 @@
 #include <vector>
 #include <iostream>
 #include "Player.h"
+#include "BFS.h"
+#include "AStar.h"
+#include <algorithm>
+#include <iostream>
+#include <queue>
+#include <set>
+#include <map>
+#include <cmath>
+#include <functional>
 #include "Logger.h"
+
 
 class Board {
 public:
@@ -14,9 +24,10 @@ public:
     void display() const;
     const Player& getPlayer(int playerId) const;
     bool validWall(int hv, int x, int y);
-    bool is_path_to_end(std::pair<int,int> start, int end_row);
-    int validMove(int x, int y);
     bool is_possible_to_move(Player& player, int newX, int newY);
+
+    // getter 
+    std::vector<std::vector<int>> get_walls(){return walls;}
 
 private:
     static const int size = 17;
@@ -31,5 +42,6 @@ private:
 
 bool is_valid_point(int x, int y, int board_size);
 std::vector<std::pair<int,int>> dirction2position(int direction, int x, int y);
+int validMove(int x, int y, std::vector<std::vector<int>>& walls);
 
 #endif // BOARD_H
