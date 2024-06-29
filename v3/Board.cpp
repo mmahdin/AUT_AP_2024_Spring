@@ -118,6 +118,11 @@ bool Board::validWall(int hv, int x, int y) {
         return false;
     }
 
+    if ((x==8 && hv==0) || (x==7 && hv==0) || (y==8 && hv==1) || (y==7 && hv==1)){
+        logger.log("Wall conflict with border", Logger::LogLevel::INFO);
+        return false;
+    }
+
     // Temporarily add the wall to check if it blocks player paths
     walls.push_back(std::vector<int>{hv, x, y});
 

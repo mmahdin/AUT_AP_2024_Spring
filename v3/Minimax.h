@@ -17,16 +17,17 @@ struct M_Node {
 
 class Minimax {    
 public:
-    Minimax(int depth, M_Node& node, bool maximizingPlayer);
+    Minimax(int depth, M_Node& node, bool maximizingPlayer, bool player);
     Move operator()();
 
 private:
     int depth;
     M_Node& node;
     bool maximizingPlayer;
+    bool playerId;
 
-    int minimax(M_Node& node, int depth, bool maximizingPlayer);
-    M_Node make_node(Move move);
+    int minimax(M_Node& node, int depth, bool maximizingPlayer, bool playerId);
+    M_Node make_node(Move move, bool playerId);
 };
 
 #endif // MINIMAX_H

@@ -34,7 +34,7 @@ std::vector<std::pair<int, int>> way_to_win(std::pair<int,int> start, int goalX,
             int nx = neighbor.first, ny = neighbor.second;
             if (is_valid_point(nx, ny, 9)){
                 if (closedSet.count(hash(nx, ny))) continue;
-                int tentativeG = current.g + 1;
+                float tentativeG = current.g + 0.5;
                 openSet.emplace( Node(nx, ny, tentativeG, heuristic(nx, goalX)));
             }
         }

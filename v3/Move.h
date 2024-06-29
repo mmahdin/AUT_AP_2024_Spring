@@ -14,8 +14,8 @@ struct Move {
     int hv = 0; // for piece always 0
 };
 
-int M_heuristic(const Player& player1, const Player& player2, Board& board);
+int M_heuristic(const Player& player1, const Player& player2, Board& board, bool max, bool id);
 
-std::vector<Move> possible_moves(Board& board, Player& player1, Player& player2, int turn); // 0 for player one turn and 1 for player two turn
+std::vector<Move> possible_moves(Board& board, Player& player); // 0 for player one turn and 1 for player two turn
 
 #endif // MOVE_H

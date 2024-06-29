@@ -7,7 +7,7 @@
 // Define a structure for the nodes in the priority queue
 struct Node {
     int x, y;
-    int g, h; // g is the cost from start to current node, h is the heuristic cost to the goal
+    float g, h; // g is the cost from start to current node, h is the heuristic cost to the goal
     Node(int x, int y, int g, int h) : x(x), y(y), g(g), h(h) {}
     int f() const { return g + h; }
 };
