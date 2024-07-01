@@ -9,6 +9,7 @@
 struct M_Node {
     std::shared_ptr<Board> board;
     Move last_move;
+    int value;
 };
 
 class Minimax {

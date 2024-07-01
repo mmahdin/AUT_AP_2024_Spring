@@ -12,15 +12,14 @@ int main() {
     Logger logger("game.log");
     logger.log("Game started", Logger::INFO);
 
-    Player player1(6, 2, '1');
+    Player player1(0, 4, '1');
     Player player2(8, 4, '2');
     std::shared_ptr<Board> board = std::make_shared<Board>(player1, player2, logger);
     board->display();
-
+    M_Node rootNode{board, Move{}};
+    Minimax minimax(2, rootNode, true, 0);
     int i = 0;
     while (!board->is_finished()) {
-        M_Node rootNode{board, Move{}};
-        Minimax minimax(2, rootNode, true, i % 2);
 
         Move bestMove;
         if (i % 2 == 0) {

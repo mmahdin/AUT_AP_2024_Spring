@@ -13,7 +13,7 @@ int Player::get_wall_left() const{
     return wall_left;
 }
 
-void Player::use_wall(){
+void Player::use_wall() {
     wall_left--;
 }
 

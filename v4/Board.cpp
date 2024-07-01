@@ -36,7 +36,6 @@ void Board::movePlayer(int playerId, int newX, int newY) {
     grid[player.getX()][player.getY()] = '.';
     if(playerId==1){}
     player.setPosition(newX, newY);
-    std::cout<<"NewX: "<<newX<<std::endl;
     grid[2*newX][2*newY] = player.getId();
     logger.log("Player " + std::to_string(playerId) + " moved to (" + std::to_string(newX) + ", " + std::to_string(newY) + ")", Logger::DEBUG);
 }
@@ -88,6 +87,10 @@ void Board::display() const {
 }
 
 const Player& Board::getPlayer(int playerId) const {
+    return (playerId == 1) ? player1 : player2;
+}
+
+Player& Board::getPlayer_n(int playerId){
     return (playerId == 1) ? player1 : player2;
 }
 

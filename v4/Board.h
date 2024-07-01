@@ -23,6 +23,7 @@ public:
     void movePlayer(int playerId, int newX, int newY); // player position
     void display() const;
     const Player& getPlayer(int playerId) const;
+    Player& getPlayer_n(int playerId);
     bool validWall(int hv, int x, int y);
     bool is_possible_to_move(Player& player, int newX, int newY);
     bool is_finished();
