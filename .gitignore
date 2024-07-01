@@ -4,3 +4,6 @@ main
 main.o
 v2/.vscode/settings.json
 v2/obj/Board.o
+v3/*.Identifier
+v4/bin/
+v4/obj/
