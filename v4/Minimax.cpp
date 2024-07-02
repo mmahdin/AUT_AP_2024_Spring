@@ -10,7 +10,7 @@ Minimax::Minimax(int depth, M_Node& node, bool maximizingPlayer, bool playerId)
 
 Move Minimax::operator()() {
     int bestScore = (maximizingPlayer) ? std::numeric_limits<int>::min() : std::numeric_limits<int>::max();
-    Move bestMove;
+    std::vector<std::pair<int,Move>> move_vect;
 
     std::vector<std::vector<int>> walls = node.board->get_walls();
     int p1_d = way_to_win(std::make_pair(node.board->getPlayer(1).getX() / 2, node.board->getPlayer(1).getY() / 2), 8, walls).size();
@@ -20,20 +20,22 @@ Move Minimax::operator()() {
 
     std::vector<Move> moves = possible_moves(node.board, playerId);
 
-    #pragma omp parallel for reduction(max : bestScore) shared(bestMove)
+    #pragma omp parallel for
     for (int i = 0; i < moves.size(); ++i) {
         M_Node newNode = make_node(moves[i], playerId, node);
         int currentScore = minimax(newNode, depth - 1, !maximizingPlayer, !playerId);
 
         #pragma omp critical
         {
-            if ((maximizingPlayer && currentScore > bestScore) || (!maximizingPlayer && currentScore < bestScore)) {
-                bestScore = currentScore;
-                bestMove = moves[i];
-            }
+            move_vect.push_back(std::make_pair(currentScore, moves[i]));
         }
     }
-    return bestMove;
+    auto it = std::max_element(move_vect.begin(), move_vect.end(),
+                                                            [](const auto& lhs, const auto& rhs) {
+                                                            return lhs.first < rhs.first;
+                                                            });
+
+    return (*it).second;
 }
 
 int Minimax::minimax(M_Node& node, int depth, bool maximizingPlayer, bool playerId) {

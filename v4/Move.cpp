@@ -16,15 +16,15 @@ int M_heuristic(std::shared_ptr<Board>& board, bool max, bool id, hist history) 
     float dist_opponnet_w{1};
     float dist_player_w{1};
     float wall_w{1};
-    float hist_dist_opponent_w{2};
-    float hist_dist_player_w{2};
+    float hist_dist_opponent_w{1};
+    float hist_dist_player_w{1};
     float dc_hist{0};
 
     // if (!id) {
         int opponent_path_len = player_two_distance;
 
         result += opponent_path_len;
-        result -= 3*player_one_distance;
+        result -= player_one_distance;
         result += dist_opponnet_w * d2;
         result -= dist_player_w * d1;
         // result += wall_w*(board->getPlayer('1').get_wall_left());
