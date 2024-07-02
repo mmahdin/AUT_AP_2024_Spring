@@ -16,11 +16,14 @@ int main() {
     Player player2(8, 4, '2');
     std::shared_ptr<Board> board = std::make_shared<Board>(player1, player2, logger);
     board->display();
+
     M_Node rootNode{board, Move{}};
     Minimax minimax(2, rootNode, true, 0);
+
+    Move bestMove;
+
     int i = 0;
     while (!board->is_finished()) {
-
         Move bestMove;
         if (i % 2 == 0) {
             bestMove = minimax();

@@ -20,6 +20,7 @@ std::vector<std::pair<int, int>> way_to_win(std::pair<int,int> start, int goalX,
         Node current = openSet.top();
         openSet.pop();
         way_to_win.push_back(std::make_pair(current.x, current.y));
+        
         if (current.x == goalX) {
             return way_to_win;
         }
@@ -40,7 +41,7 @@ std::vector<std::pair<int, int>> way_to_win(std::pair<int,int> start, int goalX,
         }
     }
 
-    way_to_win.clear();
+    // way_to_win.clear();
     return way_to_win; 
 }
 

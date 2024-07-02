@@ -3,77 +3,48 @@
 #include "Player.h"
 #include <memory>
 #include <vector>
+#include "hist.h"
 
-int M_heuristic(std::shared_ptr<Board>& board, bool max, bool id) {
-    int player_one_distance = board->getPlayer('1').getX() / 2;
-    int player_two_distance = (16 - board->getPlayer('2').getX()) / 2;
+int M_heuristic(std::shared_ptr<Board>& board, bool max, bool id, hist history) {
+    int player_two_distance = board->getPlayer(2).getX() / 2;
+    int player_one_distance = (16 - board->getPlayer(1).getX()) / 2;
     int result = 0;
     std::vector<std::vector<int>> walls = board->get_walls();
 
-    if (max) {
-        int opponent_path_len = player_two_distance;
-        int player_path_len = player_one_distance;
+    int d1 = way_to_win(std::make_pair(board->getPlayer(1).getX() / 2, board->getPlayer(1).getY() / 2), 8, walls).size();
+    int d2 = way_to_win(std::make_pair(board->getPlayer(2).getX() / 2, board->getPlayer(2).getY() / 2), 0, walls).size();
+    float dist_opponnet_w{1};
+    float dist_player_w{1};
+    float wall_w{1};
+    float hist_dist_opponent_w{2};
+    float hist_dist_player_w{2};
+    float dc_hist{0};
 
-        if (board->getPlayer('1').get_wall_left() != 10 && board->getPlayer('2').get_wall_left() != 10) {
-            player_path_len = way_to_win(std::make_pair(board->getPlayer('1').getX() / 2, board->getPlayer('1').getY() / 2), 8, walls).size();
-        }
+    // if (!id) {
+        int opponent_path_len = player_two_distance;
 
         result += opponent_path_len;
-        result -= player_one_distance;
-        int num = 100;
-        if (player_path_len != 0) {
-            num = player_path_len;
-        }
-        result += static_cast<int>(100.0 / num);
+        result -= 3*player_one_distance;
+        result += dist_opponnet_w * d2;
+        result -= dist_player_w * d1;
+        // result += wall_w*(board->getPlayer('1').get_wall_left());
+        result += hist_dist_opponent_w*(history.d2 - d2);
+        result += hist_dist_player_w*(history.d1 - d1 + dc_hist);
 
-        int num_1 = 50;
-        if (player_two_distance != 0) {
-            num_1 = player_two_distance;
-        }
-        result -= static_cast<int>(50.0 / num_1);
+    // std::cout << "hist d: " << history.d1 << " d1 " << d1 << std::endl;
 
-        result += (board->getPlayer('1').get_wall_left() - board->getPlayer('2').get_wall_left());
-        // if (board->getPlayer('1').getX() == 0) {
-        //     result += 100;
-        // }
-        if (player_path_len == 0 && board->getPlayer('1').getX() != 0) {
-            result -= 500;
-        }
-    } else {
-        int opponent_path_len = player_one_distance;
-        int player_path_len = player_two_distance;
+    // } else {
+    //     int opponent_path_len = player_one_distance;
 
-        if (board->getPlayer('1').get_wall_left() != 10 && board->getPlayer('2').get_wall_left() != 10) {
-            player_path_len = way_to_win(std::make_pair(board->getPlayer('2').getX() / 2, board->getPlayer('2').getY() / 2), 0, walls).size();
-        }
-
-        if (!max) {
-            result += opponent_path_len;
-        } else {
-            result += 17 * opponent_path_len;
-        }
-        result -= player_two_distance;
-        int num = 100;
-        if (player_path_len != 0) {
-            num = player_path_len;
-        }
-        result += static_cast<int>(100.0 / num);
-
-        int num_1 = 50;
-        if (player_one_distance != 0) {
-            num_1 = player_one_distance;
-        }
-        result -= static_cast<int>(50.0 / num_1);
-
-        result += (board->getPlayer('2').get_wall_left() - board->getPlayer('1').get_wall_left());
-        // if (board->getPlayer('2').getX() == 16) {
-        //     result += 100;
-        // }
-        if (player_path_len == 0 && board->getPlayer('2').getX() != 16) {
-            result -= 500;
-        }
-    }
-    std::cout<<"Result: "<<result<<std::endl;
+    //     result += opponent_path_len;
+    //     result -= player_one_distance;
+    //     result += dist_opponnet_w * d1;
+    //     result -= dist_player_w * d2;
+    //     result += wall_w*(board->getPlayer(1).get_wall_left() - board->getPlayer(2).get_wall_left());
+    //     result += hist_dist_opponent_w*(history.d1 - d1);
+    //     result -= hist_dist_player_w*(history.d2 - d2 + dc_hist);
+    // }
+    // std::cout<<"Result: "<<result<<std::endl;
 
     return result;
 }
