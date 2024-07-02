@@ -7,6 +7,7 @@
 #include <cstddef>
 #include <iostream>
 #include <memory>
+#include <chrono>
 
 int main() {
     Logger logger("game.log");
@@ -18,15 +19,18 @@ int main() {
     board->display();
 
     M_Node rootNode{board, Move{}};
-    Minimax minimax(2, rootNode, true, 0);
+    Minimax minimax(3, rootNode, true, 0);
 
     Move bestMove;
 
     int i = 0;
     while (!board->is_finished()) {
-        Move bestMove;
         if (i % 2 == 0) {
+            auto start = std::chrono::high_resolution_clock::now(); // Start time
             bestMove = minimax();
+            auto end = std::chrono::high_resolution_clock::now(); // End time
+            std::chrono::duration<double> duration = end - start;
+            std::cout << "Time taken for minimax(): " << duration.count() << " seconds" << std::endl;
         } else {
             bestMove = hand_play();
         }

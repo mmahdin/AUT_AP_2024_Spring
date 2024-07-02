@@ -119,28 +119,39 @@ int M_heuristic(std::shared_ptr<Board>& board, bool max, bool id, hist history) 
 std::vector<Move> possible_moves(std::shared_ptr<Board>& board, bool playerId) {
     std::vector<Move> possible_moves;
     Player player = (playerId==0)? board->getPlayer(1) : board->getPlayer(2);
+    std::vector<std::pair<int, int>> directions = {
+        {1, 0}, {2, 0}, {-1, 0}, {-2, 0}, {0, 1}, {0, 2}, {0, -1}, {0, -2}
+    };
 
-    if (player.get_wall_left() > 0) {
-        for (int m = 0; m < 2; ++m) {
-            for (int i = 0; i < 8; ++i) {
-                for (int j = 0; j < 8; ++j) {
-                    if (board->validWall(m, i, j)) {
-                        Move move{0, i, j,0, m};
-                        possible_moves.push_back(move);
+    for (const auto& dir : directions) {
+        int newX = player.getX()/2 + dir.first;
+        int newY = player.getY()/2 + dir.second;
+        if (board->is_possible_to_move(player, newX, newY)) {
+            Move move{1, newX, newY, 0, 0};
+            possible_moves.push_back(move);
+        }
+    }
+        if (player.get_wall_left() > 0) {
+            for (int m = 0; m < 2; ++m) {
+                for (int i = 0; i < 8; ++i) {
+                    for (int j = 0; j < 8; ++j) {
+                        if (board->validWall(m, i, j)) {
+                            Move move{0, i, j,0, m};
+                            possible_moves.push_back(move);
+                        }
                     }
                 }
             }
         }
-    }
 
-    for (int i = 0; i < 9; ++i) {
-        for (int j = 0; j < 9; ++j) {
-            if (board->is_possible_to_move(player, i, j)) {
-                Move move{1, i, j, 0, 0};
-                possible_moves.push_back(move);
-            }
-        }
-    }
+    // for (int i = 0; i < 9; ++i) {
+    //     for (int j = 0; j < 9; ++j) {
+    //         if (board->is_possible_to_move(player, i, j)) {
+    //             Move move{1, i, j, 0, 0};
+    //             possible_moves.push_back(move);
+    //         }
+    //     }
+    // }
 
     return possible_moves;
 }

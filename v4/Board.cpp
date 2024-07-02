@@ -2,7 +2,7 @@
 #include "Logger.h"
 #include "Player.h"
 #include <algorithm>
-#include <cstddef>
+
 #include <iostream>
 
 #include <bitset>
@@ -41,37 +41,59 @@ void Board::movePlayer(int playerId, int newX, int newY) {
 }
 
 bool Board::is_possible_to_move(Player& player, int newX, int newY) {
-    if (std::abs(newX - (player.getX()/2)) + std::abs(newY - (player.getY()/2)) != 1) {
-        logger.log("out of range move", Logger::DEBUG);
+    int currentX = player.getX() / 2;
+    int currentY = player.getY() / 2;
+    int opponentX = (player.getId() == '1') ? player2.getX() / 2 : player1.getX() / 2;
+    int opponentY = (player.getId() == '1') ? player2.getY() / 2 : player1.getY() / 2;
+    // std::cout<<"O x: "<<opponentX<<" O y: "<<opponentY<<std::endl;
+    // std::cout<<"N x: "<<newX<<" N y: "<<newY<<std::endl;
+
+    if (std::abs(newX - currentX) + std::abs(newY - currentY) != 1) {
+        // Check for face-to-face jump move
+        if ((newX-1 == opponentX && newY == opponentY)&&(std::abs(newX - currentX)==2)) {
+            int jumpX = 2 * opponentX - currentX;
+            int jumpY = 2 * opponentY - currentY;
+            if (is_valid_point(2 * jumpX, 2 * jumpY, size) && grid[2 * jumpX][2 * jumpY] == '.') {
+                logger.log("Face-to-face jump move", Logger::DEBUG);
+                return true;
+            }
+
+            logger.log("Blocked face-to-face jump", Logger::DEBUG);
+            return false;
+        }
+
+        logger.log("Out of range move", Logger::DEBUG);
         return false;
     }
+
     if (!is_valid_point(2 * newX, 2 * newY, size) || grid[2 * newX][2 * newY] != '.') {
         logger.log("Not a valid position to go", Logger::DEBUG);
         return false;
     }
-    if(grid[2*newX][2*newY]!='.'){
+    if (grid[2 * newX][2 * newY] != '.') {
         logger.log("There is already a player there", Logger::DEBUG);
         return false;
     }
 
-    std::bitset<4> valid_moves(validMove(player.getX() / 2, player.getY() / 2, walls));
+    std::bitset<4> valid_moves(validMove(currentX, currentY, walls));
 
-    if (newY - (player.getY()/2) == 1 && !valid_moves[0]) {
+    if (newY - currentY == 1 && !valid_moves[0]) {
         logger.log("Move right is blocked", Logger::DEBUG);
         return false;
-    } else if ((player.getY()/2) - newY == 1 && !valid_moves[1]) {
+    } else if (currentY - newY == 1 && !valid_moves[1]) {
         logger.log("Move left is blocked", Logger::DEBUG);
         return false;
-    } else if (newX - (player.getX()/2) == 1 && !valid_moves[2]) {
+    } else if (newX - currentX == 1 && !valid_moves[2]) {
         logger.log("Move down is blocked", Logger::DEBUG);
         return false; 
-    } else if ((player.getX()/2) - newX == 1 && !valid_moves[3]) {
+    } else if (currentX - newX == 1 && !valid_moves[3]) {
         logger.log("Move up is blocked", Logger::DEBUG);
         return false; 
     }
 
     return true;
 }
+
 
 void Board::display() const {
     std::cout<<std::endl;
