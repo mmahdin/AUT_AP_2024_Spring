@@ -12,13 +12,17 @@ int M_heuristic(std::shared_ptr<Board>& board, bool max, bool id, hist history) 
     std::vector<std::vector<int>> walls = board->get_walls();
 
     int d1 = way_to_win(std::make_pair(board->getPlayer(1).getX() / 2, board->getPlayer(1).getY() / 2), 8, walls).size();
+    int d1_one_next = way_to_win(std::make_pair(board->getPlayer(1).getX() / 2, board->getPlayer(1).getY() / 2), board->getPlayer(1).getX() / 2 + 1, walls).size();
     int d2 = way_to_win(std::make_pair(board->getPlayer(2).getX() / 2, board->getPlayer(2).getY() / 2), 0, walls).size();
-    float dist_opponnet_w{2};
-    float dist_player_w{3};
+    int d2_one_next = way_to_win(std::make_pair(board->getPlayer(2).getX() / 2, board->getPlayer(2).getY() / 2), board->getPlayer(2).getX() / 2 - 1, walls).size();
+    float dist_opponnet_w{1};
+    float dist_player_w{1};
     float wall_w{1};
     float hist_dist_opponent_w{1};
-    float hist_dist_player_w{2};
+    float hist_dist_player_w{1};
     float dc_hist{0};
+    float d1_one_next_w{1};
+    float d2_one_next_w{2};
 
     // if (!id) {
         int opponent_path_len = player_two_distance;
@@ -27,9 +31,12 @@ int M_heuristic(std::shared_ptr<Board>& board, bool max, bool id, hist history) 
         result -= player_one_distance;
         result += dist_opponnet_w * d2;
         result -= dist_player_w * d1;
-        // result += wall_w*(board->getPlayer('1').get_wall_left());
+        result += wall_w*(board->getPlayer('1').get_wall_left());
         result += hist_dist_opponent_w*(history.d2 - d2);
         result += hist_dist_player_w*(history.d1 - d1 + dc_hist);
+
+        result += d2_one_next_w * d2_one_next;
+        result -= d1_one_next_w * d1_one_next;
 
     // std::cout << "hist d: " << history.d1 << " d1 " << d1 << std::endl;
 
@@ -122,27 +129,29 @@ std::vector<Move> possible_moves(std::shared_ptr<Board>& board, bool playerId) {
     std::vector<std::pair<int, int>> directions = {
         {1, 0}, {2, 0}, {-1, 0}, {-2, 0}, {0, 1}, {0, 2}, {0, -1}, {0, -2}
     };
-
+    int oldX = player.getX()/2;
+    int oldY = player.getY()/2 ;
     for (const auto& dir : directions) {
-        int newX = player.getX()/2 + dir.first;
-        int newY = player.getY()/2 + dir.second;
+        int newX = oldX + dir.first;
+        int newY = oldY + dir.second;
         if (board->is_possible_to_move(player, newX, newY)) {
             Move move{1, newX, newY, 0, 0};
             possible_moves.push_back(move);
         }
     }
-        if (player.get_wall_left() > 0) {
-            for (int m = 0; m < 2; ++m) {
-                for (int i = 0; i < 8; ++i) {
-                    for (int j = 0; j < 8; ++j) {
-                        if (board->validWall(m, i, j)) {
-                            Move move{0, i, j,0, m};
-                            possible_moves.push_back(move);
-                        }
+
+    if (player.get_wall_left() > 0) {
+        for (int m = 0; m < 2; ++m) {
+            for (int i = 0; i < 8; ++i) {
+                for (int j = 0; j < 8; ++j) {
+                    if (board->validWall(m, i, j)) {
+                        Move move{0, i, j,0, m};
+                        possible_moves.push_back(move);
                     }
                 }
             }
         }
+    }
 
     // for (int i = 0; i < 9; ++i) {
     //     for (int j = 0; j < 9; ++j) {

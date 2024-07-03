@@ -7,3 +7,6 @@ v2/obj/Board.o
 v3/*.Identifier
 v4/bin/
 v4/obj/
+v4/boost_1_85_0.tar.gz
+v4/boost_1_85_0/
+v4/.vscode/

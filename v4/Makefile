@@ -2,7 +2,7 @@
 CXX = g++
 
 # Compiler flags
-CXXFLAGS = -Wall -std=c++20 -fPIE -fopenmp -O3
+CXXFLAGS = -Wall -std=c++20 -fPIE -fopenmp -O3 
 
 # Linker flags
 LDFLAGS = -fPIE -std=gnu++20
@@ -21,6 +21,13 @@ OBJS = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
 # Executable name
 TARGET = $(BIN_DIR)/quoridor
 
+# Boost library paths (adjust as necessary)
+BOOST_LIB_DIR = /usr/local/lib
+BOOST_INCLUDE_DIR = /usr/local/include
+
+# Libraries to link
+LIBS = -L$(BOOST_LIB_DIR) -lboost_system -lboost_json -lboost_thread -lboost_filesystem
+
 # Default target
 all: $(TARGET)
 
@@ -33,11 +40,11 @@ $(BIN_DIR):
 
 # Rule to build the executable
 $(TARGET): $(OBJ_DIR) $(BIN_DIR) $(OBJS)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) $(LDFLAGS) $(LIBS) -o $@
 
 # Rule to build object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -I$(BOOST_INCLUDE_DIR) -c $< -o $@
 
 # Clean up build files
 clean:

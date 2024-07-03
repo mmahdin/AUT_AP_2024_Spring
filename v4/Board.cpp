@@ -138,6 +138,15 @@ void Board::addWall(int x, int y, int horizontal) {
     walls.push_back(std::vector<int>{horizontal, x, y});
     x = 2*x;
     y = 2*y;
+
+    if(horizontal==0){
+        wall w{x, y};
+        H_walls.push_back(w);
+    }
+    else {
+        wall w{x, y};
+        V_walls.push_back(w);
+    }
     
     if (horizontal) {
         grid[x+1][y] = '-';
@@ -263,9 +272,16 @@ std::vector<std::vector<int>> Board::get_walls() const {
     return walls;
 }
 
-void Board::use_wall(char playerId){
-    if(playerId=='1')
+void Board::use_wall(int playerId){
+    if(playerId==1)
         player1.use_wall();
     else
         player2.use_wall();
 }
+
+std::vector<wall> Board::get_H_walls() const{
+    return H_walls;
+};
+std::vector<wall> Board::get_V_walls() const{
+    return V_walls;
+};

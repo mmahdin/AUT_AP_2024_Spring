@@ -15,6 +15,9 @@
 #include <functional>
 #include "Logger.h"
 
+struct wall{
+    int startX, startY;
+};
 
 class Board {
 public:
@@ -29,10 +32,12 @@ public:
     bool is_possible_to_move(Player& player, int newX, int newY);
     bool is_finished();
     char who_is_winner();
-    void use_wall(char playerId);
+    void use_wall(int playerId);
 
     // getter 
     std::vector<std::vector<int>> get_walls() const;
+    std::vector<wall> get_H_walls() const;
+    std::vector<wall> get_V_walls() const;
 
 private:
     static const int size = 17;
@@ -41,6 +46,8 @@ private:
     Player player1;
     Player player2;
     Logger& logger;
+    std::vector<wall> H_walls;
+    std::vector<wall> V_walls;
 
     void initializeGrid();
 };

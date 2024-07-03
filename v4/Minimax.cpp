@@ -4,15 +4,14 @@
 #include <vector>
 #include "Player.h"
 #include <omp.h>  // Include OpenMP header
-#include <chrono> // For time tracking
 #include <fstream>
 
 Minimax::Minimax(int depth, M_Node& node, bool maximizingPlayer, bool playerId)
     : depth{depth}, node{node}, maximizingPlayer{maximizingPlayer}, playerId{playerId} {}
 
 Move Minimax::operator()() {
-    auto start_time = std::chrono::high_resolution_clock::now();
-    auto end_time = start_time + std::chrono::seconds(30); // Set end time
+    start_time = std::chrono::high_resolution_clock::now();
+    end_time = start_time + std::chrono::seconds(30); // Set end time
 
     int bestScore = (maximizingPlayer) ? std::numeric_limits<int>::min() : std::numeric_limits<int>::max();
     Move bestMove;
@@ -48,19 +47,18 @@ Move Minimax::operator()() {
             bestScore = it->first;
             bestMove = it->second;
         }
-
-        // Check if time is up
-        auto current_time = std::chrono::high_resolution_clock::now();
-        auto elapsed_time = current_time - start_time;
-        if (current_time + elapsed_time * 100 > end_time) {
-            // break; // Exit loop if time is up
-        }
     }
 
     return bestMove;
 }
 
 int Minimax::minimax(M_Node& node, int depth, bool maximizingPlayer, bool playerId, int alpha, int beta) {
+    auto current_time = std::chrono::high_resolution_clock::now();
+    auto elapsed_time = current_time - start_time;
+    if (current_time + std::chrono::seconds(2) > end_time) {
+        return 0;
+    }
+
     if (depth == 0 || node.board->is_finished()) {
         return M_heuristic(node.board, 0, 0, history);
     }

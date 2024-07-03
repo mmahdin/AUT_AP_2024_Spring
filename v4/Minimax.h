@@ -6,6 +6,7 @@
 #include <vector>
 #include <memory>
 #include "hist.h"
+#include <chrono> 
 
 struct M_Node {
     std::shared_ptr<Board> board;
@@ -25,6 +26,8 @@ private:
     int minimax(M_Node& node, int depth, bool maximizingPlayer, bool playerId, int alpha, int beta);
     M_Node make_node(Move move, bool playerId, M_Node& node);
     hist history;
+    std::chrono::time_point<std::chrono::high_resolution_clock> start_time;
+    std::chrono::time_point<std::chrono::high_resolution_clock> end_time;
 };
 
 int M_heuristic(std::shared_ptr<Board>& board, bool max, bool id, hist history);
