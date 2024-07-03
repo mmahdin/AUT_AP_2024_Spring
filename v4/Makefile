@@ -5,7 +5,7 @@ CXX = g++
 CXXFLAGS = -Wall -std=c++20 -fPIE -fopenmp
 
 # Linker flags
-LDFLAGS = -fPIE
+LDFLAGS = -fPIE -std=gnu++20
 
 # Directories
 SRC_DIR = .

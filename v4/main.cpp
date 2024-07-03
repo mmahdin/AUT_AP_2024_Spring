@@ -19,7 +19,7 @@ int main() {
     board->display();
 
     M_Node rootNode{board, Move{}};
-    Minimax minimax(1, rootNode, true, 0);
+    Minimax minimax(3, rootNode, true, 0);
 
 
     Move bestMove;

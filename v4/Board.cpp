@@ -45,8 +45,6 @@ bool Board::is_possible_to_move(Player& player, int newX, int newY) {
     int currentY = player.getY() / 2;
     int opponentX = (player.getId() == '1') ? player2.getX() / 2 : player1.getX() / 2;
     int opponentY = (player.getId() == '1') ? player2.getY() / 2 : player1.getY() / 2;
-    // std::cout<<"O x: "<<opponentX<<" O y: "<<opponentY<<std::endl;
-    // std::cout<<"N x: "<<newX<<" N y: "<<newY<<std::endl;
 
     if (std::abs(newX - currentX) + std::abs(newY - currentY) != 1) {
         // Check for face-to-face jump move
