@@ -110,7 +110,7 @@ void handle_connection(tcp::socket& socket, const std::shared_ptr<Board>& board,
 int main() {
     try {
         boost::asio::io_service io_service;
-        tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), 6668));
+        tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), 6648));
 
         std::cout << "Server listening on port 12345" << std::endl;
 

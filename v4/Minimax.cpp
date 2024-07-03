@@ -44,8 +44,10 @@ Move Minimax::operator()() {
                                    });
 
         if (it != move_vect.end()) {
-            bestScore = it->first;
-            bestMove = it->second;
+            if (it->first > bestScore){
+                bestScore = it->first;
+                bestMove = it->second;
+            }
         }
     }
 
@@ -56,7 +58,7 @@ int Minimax::minimax(M_Node& node, int depth, bool maximizingPlayer, bool player
     auto current_time = std::chrono::high_resolution_clock::now();
     auto elapsed_time = current_time - start_time;
     if (current_time + std::chrono::seconds(2) > end_time) {
-        return 0;
+        return std::numeric_limits<int>::min();
     }
 
     if (depth == 0 || node.board->is_finished()) {

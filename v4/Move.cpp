@@ -15,14 +15,14 @@ int M_heuristic(std::shared_ptr<Board>& board, bool max, bool id, hist history) 
     int d1_one_next = way_to_win(std::make_pair(board->getPlayer(1).getX() / 2, board->getPlayer(1).getY() / 2), board->getPlayer(1).getX() / 2 + 1, walls).size();
     int d2 = way_to_win(std::make_pair(board->getPlayer(2).getX() / 2, board->getPlayer(2).getY() / 2), 0, walls).size();
     int d2_one_next = way_to_win(std::make_pair(board->getPlayer(2).getX() / 2, board->getPlayer(2).getY() / 2), board->getPlayer(2).getX() / 2 - 1, walls).size();
-    float dist_opponnet_w{1};
+    float dist_opponnet_w{2};
     float dist_player_w{1};
     float wall_w{1};
     float hist_dist_opponent_w{1};
     float hist_dist_player_w{1};
     float dc_hist{0};
     float d1_one_next_w{1};
-    float d2_one_next_w{2};
+    float d2_one_next_w{1};
 
     // if (!id) {
         int opponent_path_len = player_two_distance;
