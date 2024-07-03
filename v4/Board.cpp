@@ -106,6 +106,25 @@ void Board::display() const {
     logger.log("Board displayed", Logger::INFO);
 }
 
+void Board::displayf(std::string text) const {
+        LoggerMinimax log("output.log");
+        if (text=="b"){
+            log << std::endl;
+            for (int i = 0; i < size; ++i) {
+                for (int j = 0; j < size; ++j) {
+                    log << grid[i][j] << ' ';
+                }
+                log << std::endl;
+            }
+            log << "__________________________________" << std::endl;
+            log << std::endl;
+        }
+        else{
+            log << text;
+        }
+    }
+
+
 const Player& Board::getPlayer(int playerId) const {
     return (playerId == 1) ? player1 : player2;
 }

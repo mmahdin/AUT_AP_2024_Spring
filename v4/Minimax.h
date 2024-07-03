@@ -22,7 +22,7 @@ private:
     M_Node& node;
     bool maximizingPlayer;
     bool playerId;
-    int minimax(M_Node& node, int depth, bool maximizingPlayer, bool playerId);
+    int minimax(M_Node& node, int depth, bool maximizingPlayer, bool playerId, int alpha, int beta);
     M_Node make_node(Move move, bool playerId, M_Node& node);
     hist history;
 };

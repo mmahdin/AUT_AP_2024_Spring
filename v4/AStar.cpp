@@ -41,7 +41,7 @@ std::vector<std::pair<int, int>> way_to_win(std::pair<int,int> start, int goalX,
         }
     }
 
-    // way_to_win.clear();
+    way_to_win.clear();
     return way_to_win; 
 }
 

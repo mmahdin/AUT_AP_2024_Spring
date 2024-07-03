@@ -22,6 +22,7 @@ public:
     void addWall(int x, int y, int horizontal); // x and y are the position of player
     void movePlayer(int playerId, int newX, int newY); // player position
     void display() const;
+    void displayf(std::string text) const;
     const Player& getPlayer(int playerId) const;
     Player& getPlayer_n(int playerId);
     bool validWall(int hv, int x, int y);

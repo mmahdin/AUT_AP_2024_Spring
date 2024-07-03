@@ -2,7 +2,7 @@
 CXX = g++
 
 # Compiler flags
-CXXFLAGS = -Wall -std=c++20 -fPIE -fopenmp
+CXXFLAGS = -Wall -std=c++20 -fPIE -fopenmp -O3
 
 # Linker flags
 LDFLAGS = -fPIE -std=gnu++20
