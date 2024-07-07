@@ -1,0 +1,215 @@
+INFO: Game started
+INFO: Grid initialized
+INFO: Board initialized
+INFO: Board displayed
+INFO: Wall conflict with border
+INFO: Wall conflict with border
+INFO: Wall conflict with border
+INFO: Wall conflict with border
+INFO: Wall conflict with border
+INFO: Wall conflict with border
+INFO: Wall conflict with border
+INFO: Wall conflict with border
+INFO: Wall conflict with border
+INFO: Wall conflict with border
+INFO: Wall conflict with border
+INFO: Wall conflict with border
+INFO: Wall conflict with border
+INFO: Wall conflict with border
+INFO: Wall conflict with border
+INFO: Wall conflict with border
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: out of range move
+DEBUG: Wall added at (0, 0), horizontal: 0
+DEBUG: Wall added at (0, 2), horizontal: 0
+DEBUG: Wall added at (0, 4), horizontal: 0
+DEBUG: Wall added at (0, 6), horizontal: 0
+DEBUG: Wall added at (0, 8), horizontal: 0
+DEBUG: Wall added at (0, 10), horizontal: 0
+DEBUG: Wall added at (0, 12), horizontal: 0
+DEBUG: Wall added at (0, 14), horizontal: 0
+DEBUG: Wall added at (2, 0), horizontal: 0
+DEBUG: Wall added at (2, 2), horizontal: 0
+DEBUG: Wall added at (2, 4), horizontal: 0
+DEBUG: Wall added at (2, 6), horizontal: 0
+DEBUG: Wall added at (2, 8), horizontal: 0
+DEBUG: Wall added at (2, 10), horizontal: 0
+DEBUG: Wall added at (2, 12), horizontal: 0
+DEBUG: Wall added at (2, 14), horizontal: 0
+DEBUG: Wall added at (4, 0), horizontal: 0
+DEBUG: Wall added at (4, 2), horizontal: 0
+DEBUG: Wall added at (4, 4), horizontal: 0
+DEBUG: Wall added at (4, 6), horizontal: 0
+DEBUG: Wall added at (4, 8), horizontal: 0
+DEBUG: Wall added at (4, 10), horizontal: 0
+DEBUG: Wall added at (4, 12), horizontal: 0
+DEBUG: Wall added at (4, 14), horizontal: 0
+DEBUG: Wall added at (6, 0), horizontal: 0
+DEBUG: Wall added at (6, 2), horizontal: 0
+DEBUG: Wall added at (6, 4), horizontal: 0
+DEBUG: Wall added at (6, 6), horizontal: 0
+DEBUG: Wall added at (6, 8), horizontal: 0
+DEBUG: Wall added at (6, 10), horizontal: 0
+DEBUG: Wall added at (6, 12), horizontal: 0
+DEBUG: Wall added at (6, 14), horizontal: 0
+DEBUG: Wall added at (8, 0), horizontal: 0
+DEBUG: Wall added at (8, 2), horizontal: 0
+DEBUG: Wall added at (8, 4), horizontal: 0
+DEBUG: Wall added at (8, 6), horizontal: 0
+DEBUG: Wall added at (8, 8), horizontal: 0
+DEBUG: Wall added at (8, 10), horizontal: 0
+DEBUG: Wall added at (8, 12), horizontal: 0
+DEBUG: Wall added at (8, 14), horizontal: 0
+DEBUG: Wall added at (10, 0), horizontal: 0
+DEBUG: Wall added at (10, 2), horizontal: 0
+DEBUG: Wall added at (10, 4), horizontal: 0
+DEBUG: Wall added at (10, 6), horizontal: 0
+DEBUG: Wall added at (10, 8), horizontal: 0
+DEBUG: Wall added at (10, 10), horizontal: 0
+DEBUG: Wall added at (10, 12), horizontal: 0
+DEBUG: Wall added at (10, 14), horizontal: 0
+DEBUG: Wall added at (12, 0), horizontal: 0
+DEBUG: Wall added at (12, 2), horizontal: 0
+DEBUG: Wall added at (12, 4), horizontal: 0
+DEBUG: Wall added at (12, 6), horizontal: 0
+DEBUG: Wall added at (12, 8), horizontal: 0
+DEBUG: Wall added at (12, 10), horizontal: 0
+DEBUG: Wall added at (12, 12), horizontal: 0
+DEBUG: Wall added at (12, 14), horizontal: 0
+DEBUG: Wall added at (0, 0), horizontal: 1
+DEBUG: Wall added at (0, 2), horizontal: 1
+DEBUG: Wall added at (0, 4), horizontal: 1
+DEBUG: Wall added at (0, 6), horizontal: 1
+DEBUG: Wall added at (0, 8), horizontal: 1
+DEBUG: Wall added at (0, 10), horizontal: 1
+DEBUG: Wall added at (0, 12), horizontal: 1
+DEBUG: Wall added at (2, 0), horizontal: 1
+DEBUG: Wall added at (2, 2), horizontal: 1
+DEBUG: Wall added at (2, 4), horizontal: 1
+DEBUG: Wall added at (2, 6), horizontal: 1
+DEBUG: Wall added at (2, 8), horizontal: 1
+DEBUG: Wall added at (2, 10), horizontal: 1
+DEBUG: Wall added at (2, 12), horizontal: 1
+DEBUG: Wall added at (4, 0), horizontal: 1
+DEBUG: Wall added at (4, 2), horizontal: 1
+DEBUG: Wall added at (4, 4), horizontal: 1
+DEBUG: Wall added at (4, 6), horizontal: 1
+DEBUG: Wall added at (4, 8), horizontal: 1
+DEBUG: Wall added at (4, 10), horizontal: 1
+DEBUG: Wall added at (4, 12), horizontal: 1
+DEBUG: Wall added at (6, 0), horizontal: 1
+DEBUG: Wall added at (6, 2), horizontal: 1
+DEBUG: Wall added at (6, 4), horizontal: 1
+DEBUG: Wall added at (6, 6), horizontal: 1
+DEBUG: Wall added at (6, 8), horizontal: 1
+DEBUG: Wall added at (6, 10), horizontal: 1
+DEBUG: Wall added at (6, 12), horizontal: 1
+DEBUG: Wall added at (8, 0), horizontal: 1
+DEBUG: Wall added at (8, 2), horizontal: 1
+DEBUG: Wall added at (8, 4), horizontal: 1
+DEBUG: Wall added at (8, 6), horizontal: 1
+DEBUG: Wall added at (8, 8), horizontal: 1
+DEBUG: Wall added at (8, 10), horizontal: 1
+DEBUG: Wall added at (8, 12), horizontal: 1
+DEBUG: Wall added at (10, 0), horizontal: 1
+DEBUG: Wall added at (10, 2), horizontal: 1
+DEBUG: Wall added at (10, 4), horizontal: 1
+DEBUG: Wall added at (10, 6), horizontal: 1
+DEBUG: Wall added at (10, 8), horizontal: 1
+DEBUG: Wall added at (10, 10), horizontal: 1
+DEBUG: Wall added at (10, 12), horizontal: 1
+DEBUG: Wall added at (12, 0), horizontal: 1
+DEBUG: Wall added at (12, 2), horizontal: 1
+DEBUG: Wall added at (12, 4), horizontal: 1
+DEBUG: Wall added at (12, 6), horizontal: 1
+DEBUG: Wall added at (12, 8), horizontal: 1
+DEBUG: Wall added at (12, 10), horizontal: 1
+DEBUG: Wall added at (12, 12), horizontal: 1
+DEBUG: Wall added at (14, 0), horizontal: 1
+DEBUG: Wall added at (14, 2), horizontal: 1
+DEBUG: Wall added at (14, 4), horizontal: 1
+DEBUG: Wall added at (14, 6), horizontal: 1
+DEBUG: Wall added at (14, 8), horizontal: 1
+DEBUG: Wall added at (14, 10), horizontal: 1
+DEBUG: Wall added at (14, 12), horizontal: 1
+DEBUG: Player 1 moved to (6, 2)
+DEBUG: Player 1 moved to (7, 1)
+DEBUG: Player 1 moved to (7, 3)
+DEBUG: Player 1 moved to (8, 2)
+INFO: Board displayed
+INFO: Game ended
