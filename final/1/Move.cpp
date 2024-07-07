@@ -28,17 +28,17 @@ int M_heuristic(std::shared_ptr<Board>& board, bool max, bool id, hist history) 
     // if (!id) {
         int opponent_path_len = player_two_distance;
 
-        result -= opponent_path_len;
-        result += player_one_distance;
-        result -= dist_opponnet_w * d2;
-        result += dist_player_w * d1;
+        result += opponent_path_len;
+        result -= player_one_distance;
+        result += dist_opponnet_w * d2;
+        result -= dist_player_w * d1;
         // result += d2 - 3*(8-)
-        result -= wall_w*(board->getPlayer('1').get_wall_left());
-        result -= hist_dist_opponent_w*(history.d2 - d2);
-        result -= hist_dist_player_w*(history.d1 - d1 + dc_hist);
+        result += wall_w*(board->getPlayer('1').get_wall_left());
+        result += hist_dist_opponent_w*(history.d2 - d2);
+        result += hist_dist_player_w*(history.d1 - d1 + dc_hist);
 
-        result -= d2_one_next_w * d2_one_next;
-        result += d1_one_next_w * d1_one_next;
+        result += d2_one_next_w * d2_one_next;
+        result -= d1_one_next_w * d1_one_next;
 
     // std::cout << "hist d: " << history.d1 << " d1 " << d1 << std::endl;
 

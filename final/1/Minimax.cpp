@@ -62,12 +62,12 @@ int Minimax::minimax(M_Node& node, int depth, bool maximizingPlayer, bool player
     }
 
     if (depth == 0 || node.board->is_finished()) {
-        return M_heuristic(node.board, 0, 1, history);
+        return M_heuristic(node.board, 0, 0, history);
     }
 
     if (maximizingPlayer) {
         int maxEval = std::numeric_limits<int>::min();
-        for (const auto& move : possible_moves(node.board, 1)) {
+        for (const auto& move : possible_moves(node.board, 0)) {
             M_Node newNode = make_node(move, playerId, node);
             int eval = minimax(newNode, depth - 1, false, !playerId, alpha, beta);
             maxEval = std::max(maxEval, eval);
@@ -80,7 +80,7 @@ int Minimax::minimax(M_Node& node, int depth, bool maximizingPlayer, bool player
         return maxEval;
     } else {
         int minEval = std::numeric_limits<int>::max();
-        for (const auto& move : possible_moves(node.board, 0)) {
+        for (const auto& move : possible_moves(node.board, 1)) {
             M_Node newNode = make_node(move, playerId, node);
             int eval = minimax(newNode, depth - 1, true, !playerId, alpha, beta);
             minEval = std::min(minEval, eval);

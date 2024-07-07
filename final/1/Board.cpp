@@ -142,7 +142,7 @@ void Board::addWall(int x, int y, int horizontal) {
     x = 2*x;
     y = 2*y;
 
-    if(horizontal==0){
+    if(horizontal==1){
         wall w{x, y};
         H_walls.push_back(w);
     }

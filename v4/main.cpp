@@ -5,6 +5,7 @@
 #include "Minimax.h"
 #include "Move.h"
 #include "hand_play.h"
+
 using boost::asio::ip::tcp;
 namespace json = boost::json;
 
@@ -67,13 +68,41 @@ json::value serialize_game_state(const std::shared_ptr<Board>& board, const std:
     return game_state;
 }
 
-std::string dummy_function(const std::shared_ptr<Board>& board, const std::vector<Move>& turnHistory) {
-    json::value game_state = serialize_game_state(board, turnHistory);
-    return json::serialize(game_state);
+// Function to update game state from JSON
+void deserialize_game_state(const json::value& game_state, std::shared_ptr<Board>& board, std::vector<Move>& turnHistory) {
+    const auto& players = game_state.at("players").as_array();
+    board->getPlayer(1).setPosition(players[0].at("position").at("x").as_int64(), players[0].at("position").at("y").as_int64());
+    board->getPlayer(1).set_wall_left(players[0].at("wallsLeft").as_int64());
+
+    board->getPlayer(2).setPosition(players[1].at("position").at("x").as_int64(), players[1].at("position").at("y").as_int64());
+    board->getPlayer(2).set_wall_left(players[1].at("wallsLeft").as_int64());
+
+    board->clear_walls();
+    for (const auto& wall : game_state.at("walls").at("horizontal").as_array()) {
+        board->addWall(wall.at("start").at("x").as_int64(), wall.at("start").at("y").as_int64(), 0);
+    }
+    for (const auto& wall : game_state.at("walls").at("vertical").as_array()) {
+        board->addWall(wall.at("start").at("x").as_int64(), wall.at("start").at("y").as_int64(), 1);
+    }
+
+    turnHistory.clear();
+    for (const auto& move : game_state.at("turnHistory").as_array()) {
+        Move m;
+        if (move.at("action").as_string() == "placeWall") {
+            m.wall_or_piece = 0;
+            m.newX = move.at("details").at("start").at("x").as_int64();
+            m.newY = move.at("details").at("start").at("y").as_int64();
+            m.hv = move.at("details").at("end").at("y").as_int64() == m.newY ? 1 : 0;
+        } else {
+            m.wall_or_piece = 1;
+            m.newX = move.at("details").at("to").at("x").as_int64();
+            m.newY = move.at("details").at("to").at("y").as_int64();
+        }
+        turnHistory.push_back(m);
+    }
 }
 
-
-void handle_connection(tcp::socket& socket, const std::shared_ptr<Board>& board, const std::vector<Move>& turnHistory) {
+void handle_connection(tcp::socket& socket, std::shared_ptr<Board>& board, std::vector<Move>& turnHistory) {
     try {
         boost::asio::streambuf buffer;
         boost::system::error_code error;
@@ -92,8 +121,28 @@ void handle_connection(tcp::socket& socket, const std::shared_ptr<Board>& board,
 
         // Parse the JSON
         json::value parsed_data = json::parse(received_data);
-// Perform dummy function and send response
-        std::string response = dummy_function(board, turnHistory);
+
+        // Update game state from received JSON
+        deserialize_game_state(parsed_data, board, turnHistory);
+
+        // Make a move using Minimax
+        M_Node rootNode{board, Move{}};
+        Minimax minimax(4, rootNode, true, 0);
+        Move bestMove = minimax();
+        if (bestMove.wall_or_piece == 0) {
+            board->addWall(bestMove.newX, bestMove.newY, bestMove.hv);
+            board->use_wall(2); // Assuming server is player 2
+        } else {
+            board->movePlayer(2, bestMove.newX, bestMove.newY);
+        }
+        turnHistory.push_back(bestMove);
+        board->display();
+
+        // Serialize updated game state to JSON
+        json::value game_state = serialize_game_state(board, turnHistory);
+        std::string response = json::serialize(game_state);
+
+        // Send updated game state back to client
         boost::asio::write(socket, boost::asio::buffer(response + "\n"), error);
 
         if (error) {
@@ -110,7 +159,7 @@ void handle_connection(tcp::socket& socket, const std::shared_ptr<Board>& board,
 int main() {
     try {
         boost::asio::io_service io_service;
-        tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), 6648));
+        tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), 98765));
 
         std::cout << "Server listening on port 12345" << std::endl;
 
@@ -124,33 +173,11 @@ int main() {
         board->display();
 
         std::vector<Move> turnHistory;
+
+        // Example initialization of Minimax with depth 4
         M_Node rootNode{board, Move{}};
         Minimax minimax(4, rootNode, true, 0);
 
-        Move bestMove;
-        int i = 0;
-        while (!board->is_finished()) {
-            if (i % 2 == 0) {
-                auto start = std::chrono::high_resolution_clock::now(); // Start time
-                bestMove = minimax();
-                auto end = std::chrono::high_resolution_clock::now(); // End time
-                std::chrono::duration<double> duration = end - start;
-                std::cout << "Time taken for minimax(): " << duration.count() << " seconds" << std::endl;
-            } else {
-                bestMove = hand_play();
-            }
-
-            if (bestMove.wall_or_piece == 0) {
-                board->addWall(bestMove.newX, bestMove.newY, bestMove.hv);
-                board->use_wall(i % 2 + 1);
-            } else {
-                board->movePlayer(i % 2 + 1, bestMove.newX, bestMove.newY);
-            }
-
-            i++;
-            turnHistory.push_back(bestMove);
-            board->display();
-        }
 
         char winner = board->who_is_winner();
         std::cout << "Player " << winner << " wins!" << std::endl;
@@ -158,10 +185,28 @@ int main() {
 
         // Accept connections and handle them
         while (true) {
+            Move bestMove = minimax(); // Replace this with your Minimax implementation
+
+            // Apply the move to the board
+            if (bestMove.wall_or_piece == 0) {
+                board->addWall(bestMove.newX, bestMove.newY, bestMove.hv);
+                board->use_wall(1); // Assuming player1 is using a wall
+            } else {
+                board->movePlayer(1, bestMove.newX, bestMove.newY);
+            }
+
+            // Add the move to turn history
+            turnHistory.push_back(bestMove);
+
+            // Display the board after each move
+            board->display();
+            
             tcp::socket socket(io_service);
             acceptor.accept(socket);
             handle_connection(socket, board, turnHistory);
+            
         }
+
     } catch (std::exception& e) {
         std::cerr << "Exception: " << e.what() << "\n";
     }
